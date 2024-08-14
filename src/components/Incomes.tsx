@@ -38,7 +38,10 @@ export const Incomes = () => {
                     padding: 2,
                 }}
             >
-                <SimpleTable incomes={incomes} />
+                <SimpleTable
+                    incomes={incomes}
+                    setIncomes={setIncomes}
+                />
 
                 <Box
                     sx={{
