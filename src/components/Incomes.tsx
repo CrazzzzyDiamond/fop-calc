@@ -66,7 +66,7 @@ export const Incomes = () => {
                     }}
                 >
                     <Typography><b>First Quarter Sum</b></Typography>
-                    <Typography>{parsedIncomesSums.firstHalfSum}</Typography>
+                    <Typography>{parsedIncomesSums.firstQuarterSum}</Typography>
                     <Typography><b>Second Quarter Sum</b></Typography>
                     <Typography>{parsedIncomesSums.secondQuarterSum}</Typography>
                     <Typography><b>Third Quarter Sum</b></Typography>
