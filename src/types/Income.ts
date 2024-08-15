@@ -7,6 +7,7 @@ export interface Income {
     currency: string;
     uahSum: number;
     rate: number;
+    id: string;
 }
 
 export interface ParsedIncomeTable {

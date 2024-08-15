@@ -13,6 +13,7 @@ import { useForm, Controller } from "react-hook-form";
 import dayjs from "dayjs"
 
 import { getExchangeRate } from "../helpers/getExchangeRate";
+import { uid } from "../helpers/generateId";
 
 interface IncomeDialogProps {
     isOpen: boolean;
@@ -55,7 +56,8 @@ export const IncomeDialog = ({
                 date: data.date.format("DD.MM.YYYY"),
                 currency: data.currency,
                 uahSum: data.sum * rate,
-                rate
+                rate,
+                id: uid(),
             }];
 
             localStorage.setItem("incomes", JSON.stringify(newIncomes));

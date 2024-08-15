@@ -1,5 +1,4 @@
 import {
-    Button,
     TableContainer,
     Table,
     TableHead,
@@ -20,8 +19,9 @@ interface SimpleTableProps {
 export const SimpleTable = ({ incomes, setIncomes }: SimpleTableProps) => {
     const parsedIncomes = parseeIncomesSimple(incomes)
 
-    const handleDelete = (date: string) => {
-        const newIncomes = incomes.filter(income => income.date !== date);
+    const handleDelete = (id: string) => {
+        const newIncomes = incomes.filter(income => income.id !== id);
+
         setIncomes(newIncomes);
         localStorage.setItem("incomes", JSON.stringify(newIncomes));
     }
@@ -42,15 +42,6 @@ export const SimpleTable = ({ incomes, setIncomes }: SimpleTableProps) => {
                 <TableBody>
                     {parsedIncomes.map(income => (
                         <TableRow
-                            sx={{
-
-                                borderBottom: income.month === 'March'
-                                    || income.month === 'June'
-                                    || income.month === 'September'
-                                    ? '2px solid black'
-                                    : 'none'
-
-                            }}
                             key={income.date}
                         >
                             <TableCell>{income.date}</TableCell>
@@ -60,9 +51,7 @@ export const SimpleTable = ({ incomes, setIncomes }: SimpleTableProps) => {
                             <TableCell>{income.uahSum.toFixed(2)}</TableCell>
                             <TableCell>
                                 <IconButton
-                                    onClick={() => handleDelete(income.date)}
-                                    // variant='contained'
-                                    // color='primary'
+                                    onClick={() => handleDelete(income.id)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>

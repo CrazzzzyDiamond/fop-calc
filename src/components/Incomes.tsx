@@ -16,8 +16,6 @@ export const Incomes = () => {
 
     const parsedIncomesSums = parseIncomesSums(incomes);
 
-    console.log(parsedIncomesSums);
-
     useEffect(() => {
         const storedIncomes = localStorage.getItem("incomes");
 
@@ -75,7 +73,7 @@ export const Incomes = () => {
                     <Typography>{parsedIncomesSums.thirdQuarterSum}</Typography>
                     <Typography><b>Fourth Quarter Sum</b></Typography>
                     <Typography>{parsedIncomesSums.fourthQuarterSum}</Typography>
-                    <Typography><b>First Half Year Sun</b></Typography>
+                    <Typography><b>First Half Year Sum</b></Typography>
                     <Typography>{parsedIncomesSums.firstHalfSum}</Typography>
                     <Typography><b>Second Half Year Sum</b></Typography>
                     <Typography>{parsedIncomesSums.secondHalfSum}</Typography>
