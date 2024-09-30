@@ -72,13 +72,17 @@ export const IncomeDialog = ({
         <Dialog open={isOpen}>
             <form onSubmit={handleSubmit(submitFormData)}>
                 <DialogTitle>Add income</DialogTitle>
-                <DialogContent>
+                <DialogContent
+                    sx={{
+                        padding: 2,
+                    }}
+                >
                     <Box
                         sx={{
                             display: "flex",
                             flexDirection: "column",
                             gap: 2,
-                            padding: "10px 0",
+                            padding: 1,
                         }}
                     >
                         <Controller
@@ -88,6 +92,7 @@ export const IncomeDialog = ({
                                 <TextField
                                     {...field}
                                     label="Sum"
+                                    required
                                 />
                             )}
                         />
@@ -98,6 +103,7 @@ export const IncomeDialog = ({
                                 <DatePicker
                                     {...field}
                                     label="Date"
+                                    views={["day", "month"]}
                                 />
                             )}
                         />
@@ -130,7 +136,11 @@ export const IncomeDialog = ({
                         />
                     </Box>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions
+                    sx={{
+                        padding: 2,
+                    }}
+                >
                     <Button
                         onClick={onCancel}
                         color="secondary"

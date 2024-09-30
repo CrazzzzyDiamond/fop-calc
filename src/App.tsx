@@ -1,8 +1,19 @@
+import { Box } from '@mui/material';
+
+import { AppBar } from './components/AppBar'
 import { Incomes } from './components/Incomes'
 
 function App() {
   return (
-    <Incomes />
+    <Box
+      sx={{
+        backgroundColor: '#D2E0FB',
+        height: '100vh',
+      }}
+    >
+      <AppBar />
+      <Incomes />
+    </Box>
   );
 }
 
