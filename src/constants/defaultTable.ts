@@ -1,5 +1,5 @@
-import { Quarter } from '../enums/Quarter';
-import { Month } from '../enums/Month';
+import { Quarter } from '../enums/Quarter'
+import { Month } from '../enums/Month'
 
 export const defaultTable = {
     [Quarter.Q1]: {

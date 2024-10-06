@@ -1,5 +1,5 @@
-import { Quarter } from "../enums/Quarter";
-import { Month } from "../enums/Month";
+import { Quarter } from '../enums/Quarter'
+import { Month } from '../enums/Month'
 
 export interface Income {
     sum: string;
@@ -31,4 +31,24 @@ export interface ParsedIncomeTable {
         [Month.November]: Income[];
         [Month.December]: Income[];
     };
+}
+
+interface Total {
+    sum: number;
+    percentage3: number;
+    percentage5: number;
+}
+
+export interface TotalSums {
+    quarter: {
+        [Quarter.Q1]: Total;
+        [Quarter.Q2]: Total;
+        [Quarter.Q3]: Total;
+        [Quarter.Q4]: Total;
+    }
+    half: {
+        first: Total;
+        second: Total;
+    }
+    year: Total;
 }

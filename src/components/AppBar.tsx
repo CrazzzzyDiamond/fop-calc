@@ -2,7 +2,6 @@ import MUIAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
-
 export const AppBar = () => {
     return (
         <MUIAppBar
@@ -11,7 +10,7 @@ export const AppBar = () => {
                 backgroundColor: '#3f51b5',
             }}
         >
-            <Toolbar>
+            <Toolbar variant='dense'>
                 <Typography variant="h6" color="inherit" component="div">
                     FOP Calculator
                 </Typography>

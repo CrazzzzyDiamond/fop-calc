@@ -3,7 +3,7 @@ import {
     Button,
     Paper,
     Typography
-} from '@mui/material';
+} from '@mui/material'
 
 interface EmptyWarnerProps {
     handleAdd: () => void;

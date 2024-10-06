@@ -1,40 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import {
     Box,
     Button,
     Paper,
-    Typography
-} from '@mui/material';
+} from '@mui/material'
 
 import { IncomeDialog } from './IncomeDialog'
-import { Income } from '../types/Income';
-import { SimpleTable } from './SimpleTable';
+import { Income } from '@src/types/Income'
+import { SimpleTable } from './SimpleTable'
 import { parseIncomesSums } from '../helpers/parseIncomes'
-import { EmptyWarner } from './EmptyWarner';
+import { EmptyWarner } from './EmptyWarner'
+import { Total } from './Total'
 
 export const Incomes = () => {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [incomes, setIncomes] = useState<Income[]>([]);
+    const [editId, setEditId] = useState<string>('')
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [incomes, setIncomes] = useState<Income[]>([])
 
-    const parsedIncomesSums = parseIncomesSums(incomes);
+    const parsedIncomesSums = parseIncomesSums(incomes)
 
     useEffect(() => {
-        const storedIncomes = localStorage.getItem("incomes");
+        const storedIncomes = localStorage.getItem('incomes')
 
         if (storedIncomes) {
-            setIncomes(JSON.parse(storedIncomes));
+            setIncomes(JSON.parse(storedIncomes))
         }
-    }, []);
+    }, [])
 
     return (
         <Box
             sx={{
                 padding: 4,
-                height: 'calc(100vh - 164px)',
+                height: 'calc(100vh - 130px)',
+                overflowY: 'auto',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                
+
             }}
         >
             {incomes.length === 0 && (
@@ -53,12 +55,13 @@ export const Incomes = () => {
                     <SimpleTable
                         incomes={incomes}
                         setIncomes={setIncomes}
+                        setEditId={setEditId}
                     />
 
                     <Box
                         sx={{
-                            display: "flex",
-                            justifyContent: "flex-end",
+                            display: 'flex',
+                            justifyContent: 'flex-end',
                             marginTop: 2,
                         }}
                     >
@@ -71,29 +74,7 @@ export const Incomes = () => {
                         </Button>
                     </Box>
 
-                    <Box
-                        sx={{
-                            marginTop: 2,
-                            display: "inline-grid",
-                            gap: 2,
-                            gridTemplateColumns: "1fr 1fr",
-                        }}
-                    >
-                        <Typography><b>First Quarter Sum</b></Typography>
-                        <Typography>{parsedIncomesSums.firstQuarterSum}</Typography>
-                        <Typography><b>Second Quarter Sum</b></Typography>
-                        <Typography>{parsedIncomesSums.secondQuarterSum}</Typography>
-                        <Typography><b>Third Quarter Sum</b></Typography>
-                        <Typography>{parsedIncomesSums.thirdQuarterSum}</Typography>
-                        <Typography><b>Fourth Quarter Sum</b></Typography>
-                        <Typography>{parsedIncomesSums.fourthQuarterSum}</Typography>
-                        <Typography><b>First Half Year Sum</b></Typography>
-                        <Typography>{parsedIncomesSums.firstHalfSum}</Typography>
-                        <Typography><b>Second Half Year Sum</b></Typography>
-                        <Typography>{parsedIncomesSums.secondHalfSum}</Typography>
-                        <Typography><b>Year Sum</b></Typography>
-                        <Typography>{parsedIncomesSums.yearSum}</Typography>
-                    </Box>
+                    <Total parsedIncomesSums={parsedIncomesSums} />
                 </Paper>
             )}
 
@@ -101,6 +82,9 @@ export const Incomes = () => {
                 isOpen={isDialogOpen}
                 onCancel={() => setIsDialogOpen(false)}
                 setIncomes={setIncomes}
+                editId={editId}
+                setEditId={setEditId}
+                parsedIncomesSums={parsedIncomesSums}
             />
         </Box>
     )

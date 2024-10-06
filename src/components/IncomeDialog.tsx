@@ -1,75 +1,86 @@
-import { Box, Button } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { useForm, Controller } from "react-hook-form";
-import dayjs from "dayjs"
+import { Box, Button } from '@mui/material'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import TextField from '@mui/material/TextField'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import { useForm, Controller } from 'react-hook-form'
+import dayjs from 'dayjs'
 
-import { getExchangeRate } from "../helpers/getExchangeRate";
-import { uid } from "../helpers/generateId";
+import { getExchangeRate } from '../helpers/getExchangeRate'
+import { uid } from '../helpers/generateId'
 
 interface IncomeDialogProps {
     isOpen: boolean;
     onCancel: () => void;
     setIncomes: (incomes: any) => void;
+    editId?: string;
+    setEditId?: (id: string) => void;
+    parsedIncomesSums: any;
 }
 
-const CURRENCY_OPTIONS = ["UAH", "USD", "EUR"];
+const CURRENCY_OPTIONS = ['UAH', 'USD', 'EUR']
 
 export const IncomeDialog = ({
     isOpen,
     onCancel,
     setIncomes,
+    editId,
+    setEditId,
+    parsedIncomesSums,
 }: IncomeDialogProps) => {
     const {
         control,
         handleSubmit
     } = useForm({
         defaultValues: {
-            sum: "",
+            sum: '',
             date: dayjs(),
-            currency: "USD",
+            currency: 'USD',
         }
-    });
+    })
 
     const submitFormData = async (data: any) => {
-        const isUah = data.currency === "UAH"
+        const isUah = data.currency === 'UAH'
         let rate = 1
 
         if (!isUah) {
             rate = await getExchangeRate(
                 data.currency,
-                data.date.format("YYYYMMDD")
-            );
+                data.date.format('YYYYMMDD')
+            )
         }
 
         setIncomes((prevIncomes: any) => {
             const newIncomes = [...prevIncomes, {
                 sum: data.sum,
-                date: data.date.format("DD.MM.YYYY"),
+                date: data.date.format('DD.MM.YYYY'),
                 currency: data.currency,
                 uahSum: data.sum * rate,
                 rate,
                 id: uid(),
-            }];
+            }]
 
-            localStorage.setItem("incomes", JSON.stringify(newIncomes));
+            localStorage.setItem('incomes', JSON.stringify(newIncomes))
 
-            return newIncomes;
-        });
+            return newIncomes
+        })
 
-        onCancel();
-    };
+        onCancel()
+    }
+
+    const handleCancelClick = () => {
+        onCancel()
+        setEditId && setEditId('')
+    }
 
     return (
-        <Dialog open={isOpen}>
+        <Dialog open={isOpen || !!editId}>
             <form onSubmit={handleSubmit(submitFormData)}>
                 <DialogTitle>Add income</DialogTitle>
                 <DialogContent
@@ -79,8 +90,8 @@ export const IncomeDialog = ({
                 >
                     <Box
                         sx={{
-                            display: "flex",
-                            flexDirection: "column",
+                            display: 'flex',
+                            flexDirection: 'column',
                             gap: 2,
                             padding: 1,
                         }}
@@ -103,7 +114,7 @@ export const IncomeDialog = ({
                                 <DatePicker
                                     {...field}
                                     label="Date"
-                                    views={["day", "month"]}
+                                    views={['day', 'month']}
                                 />
                             )}
                         />
@@ -142,7 +153,7 @@ export const IncomeDialog = ({
                     }}
                 >
                     <Button
-                        onClick={onCancel}
+                        onClick={handleCancelClick}
                         color="secondary"
                         variant="outlined"
                     >
