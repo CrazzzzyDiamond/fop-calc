@@ -1,5 +1,4 @@
 import { Box } from '@mui/material'
-
 import { AppBar } from './components/AppBar'
 import { Incomes } from './components/Incomes'
 

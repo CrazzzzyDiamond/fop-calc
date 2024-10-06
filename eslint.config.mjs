@@ -3,8 +3,14 @@ import pluginJs from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import pluginReact from 'eslint-plugin-react'
 
-
 export default [
+  {
+    env: { 
+      browser: true, 
+      node: true, 
+      es6: true 
+    }
+  },
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}']
   },
@@ -19,6 +25,7 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'quotes': [2, 'single', { 'avoidEscape': true }],
       'semi': ['error', 'never'],
+      'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 0 }],
     }
   },
 ]
