@@ -16,16 +16,16 @@
 // }
 
 export const ROW_COLOR = {
-    'January': '#B2D7B5',
-    'February': '#A2CD5A',
-    'March': '#98DB9A',
-    'April': '#F0E68C',
-    'May': '#FFFF00',
-    'June': '#DAA520',
-    'July': '#ADD8E6',
-    'August': '#00BFFF',
-    'September': '#C8A2C8',
-    'October': '#C8A2C8',
-    'November': '#8A2BE2',
-    'December': '#800080',
+	'January': '#B2D7B5',
+	'February': '#A2CD5A',
+	'March': '#98DB9A',
+	'April': '#F0E68C',
+	'May': '#FFFF00',
+	'June': '#DAA520',
+	'July': '#ADD8E6',
+	'August': '#00BFFF',
+	'September': '#C8A2C8',
+	'October': '#C8A2C8',
+	'November': '#8A2BE2',
+	'December': '#800080',
 }

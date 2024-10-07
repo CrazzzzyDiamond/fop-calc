@@ -11,34 +11,34 @@ interface ConfirmDialogProps {
 }
 
 export const ConfirmDialog = ({
-    isOpen,
-    onCancel,
-    onConfirm,
+	isOpen,
+	onCancel,
+	onConfirm,
 }: ConfirmDialogProps) => {
-    return (
-        <Dialog
-            open={isOpen}
-            onClose={onCancel}
-        >
-            <DialogTitle>
+	return (
+		<Dialog
+			open={isOpen}
+			onClose={onCancel}
+		>
+			<DialogTitle>
                 Are you sure?
-            </DialogTitle>
-            <DialogContent>
+			</DialogTitle>
+			<DialogContent>
                 This action cannot be undone.
-            </DialogContent>
-            <DialogActions>
-                <Button
-                    onClick={onCancel}
-                >
+			</DialogContent>
+			<DialogActions>
+				<Button
+					onClick={onCancel}
+				>
                     Cancel
-                </Button>
-                <Button
-                    onClick={() => onConfirm()}
-                    color='error'
-                >
+				</Button>
+				<Button
+					onClick={() => onConfirm()}
+					color='error'
+				>
                     Confirm
-                </Button>
-            </DialogActions>
-        </Dialog>
-    )
+				</Button>
+			</DialogActions>
+		</Dialog>
+	)
 }

@@ -1,20 +1,25 @@
-import MUIAppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
+import {
+	AppBar as MUIAppBar,
+	Toolbar,
+	Typography,
+	Box,
+} from '@mui/material'
 
 export const AppBar = () => {
-    return (
-        <MUIAppBar
-            position='static'
-            sx={{
-                backgroundColor: '#3f51b5',
-            }}
-        >
-            <Toolbar variant='dense'>
-                <Typography variant="h6" color="inherit" component="div">
+	return (
+		<MUIAppBar
+			position='static'
+			sx={{
+				backgroundColor: '#3f51b5',
+			}}
+		>
+			<Toolbar variant='dense'>
+				<Box>
+					<Typography variant="h6" color="inherit" component="div">
                     FOP Calculator
-                </Typography>
-            </Toolbar>
-        </MUIAppBar>
-    )
+					</Typography>
+				</Box>
+			</Toolbar>
+		</MUIAppBar>
+	)
 }
