@@ -1,4 +1,4 @@
-export const LANGS = [
+export const LANGS_OPTIONS = [
 	{
 		value: 'en',
 		label: 'English',
