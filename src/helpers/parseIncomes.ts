@@ -5,10 +5,11 @@ import { Quarter } from '../enums/Quarter'
 import { Month } from '../enums/Month'
 import { ParsedIncomeTable, TotalSums } from '../types/Income'
 import { defaultTable } from '../constants/defaultTable'
-import { getPercent } from './getPercent'
+import { evaluate, round, add} from 'mathjs'
 dayjs.extend(CustomParseFormat)
 
-const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+const monthNames = [
+	'January', 'February', 'March', 'April', 'May', 'June',
 	'July', 'August', 'September', 'October', 'November', 'December'
 ]
 
@@ -74,63 +75,63 @@ export const parseIncomesSums = (incomes: Income[]): TotalSums => {
 		const uahSum = income.uahSum
 
 		if (month < 3) {
-			firstQuarterSum += uahSum
+			firstQuarterSum = add(firstQuarterSum, uahSum)
 		} else if (month < 6) {
-			secondQuarterSum += uahSum
+			secondQuarterSum = add(secondQuarterSum, uahSum)
 		} else if (month < 9) {
-			thirdQuarterSum += uahSum
+			thirdQuarterSum = add(thirdQuarterSum, uahSum)
 		} else {
-			fourthQuarterSum += uahSum
+			fourthQuarterSum = add(fourthQuarterSum, uahSum)
 		}
 
 		if (month < 6) {
-			firstHalfSum += uahSum
+			firstHalfSum = add(firstHalfSum, uahSum)
 		} else {
-			secondHalfSum += uahSum
+			secondHalfSum = add(secondHalfSum, uahSum)
 		}
 
-		yearSum = yearSum + uahSum
+		yearSum = add(yearSum, uahSum)
 	})
 
 	return {
 		quarter: {
 			[Quarter.Q1]: {
 				sum: firstQuarterSum,
-				percentage3: getPercent(firstQuarterSum, 3),
-				percentage5: getPercent(firstQuarterSum, 5)
+				percentage3: round(evaluate(`(${firstQuarterSum} * 3) / 100`), 2),
+				percentage5: round(evaluate(`(${firstQuarterSum} * 5) / 100`), 2)
 			},
 			[Quarter.Q2]: {
 				sum: secondQuarterSum,
-				percentage3: getPercent(secondQuarterSum, 3),
-				percentage5: getPercent(secondQuarterSum, 5)
+				percentage3: round(evaluate(`(${secondQuarterSum} * 3) / 100`), 2),
+				percentage5: round(evaluate(`(${secondQuarterSum} * 5) / 100`), 2)
 			},
 			[Quarter.Q3]: {
 				sum: thirdQuarterSum,
-				percentage3: getPercent(thirdQuarterSum, 3),
-				percentage5: getPercent(thirdQuarterSum, 5)
+				percentage3: round(evaluate(`(${thirdQuarterSum} * 3) / 100`), 2),
+				percentage5: round(evaluate(`(${thirdQuarterSum} * 5) / 100`), 2)
 			},
 			[Quarter.Q4]: {
 				sum: fourthQuarterSum,
-				percentage3: getPercent(fourthQuarterSum, 3),
-				percentage5: getPercent(fourthQuarterSum, 5)
+				percentage3: round(evaluate(`(${fourthQuarterSum} * 3) / 100`), 2),
+				percentage5: round(evaluate(`(${fourthQuarterSum} * 5) / 100`), 2)
 			}
 		},
 		half: {
 			first: {
 				sum: firstHalfSum,
-				percentage3: getPercent(firstHalfSum, 3),
-				percentage5: getPercent(firstHalfSum, 5)
+				percentage3: round(evaluate(`(${firstHalfSum} * 3) / 100`), 2),
+				percentage5: round(evaluate(`(${firstHalfSum} * 5) / 100`), 2)
 			},
 			second: {
 				sum: secondHalfSum,
-				percentage3: getPercent(secondHalfSum, 3),
-				percentage5: getPercent(secondHalfSum, 5)
+				percentage3: round(evaluate(`(${secondHalfSum} * 3) / 100`), 2),
+				percentage5: round(evaluate(`(${secondHalfSum} * 5) / 100`), 2)
 			}
 		},
 		year: {
 			sum: yearSum,
-			percentage3: getPercent(yearSum, 3),
-			percentage5: getPercent(yearSum, 5)
+			percentage3: round(evaluate(`(${yearSum} * 3) / 100`), 2),
+			percentage5: round(evaluate(`(${yearSum} * 5) / 100`), 2)
 		}
 	}
 }

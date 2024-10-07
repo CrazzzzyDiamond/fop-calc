@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { useForm, Controller } from 'react-hook-form'
 import dayjs from 'dayjs'
+import { multiply } from 'mathjs'
 
 import { getExchangeRate } from '../helpers/getExchangeRate'
 import { uid } from '../helpers/generateId'
@@ -61,7 +62,7 @@ export const IncomeDialog = ({
 				sum: data.sum,
 				date: data.date.format('DD.MM.YYYY'),
 				currency: data.currency,
-				uahSum: data.sum * rate,
+				uahSum: multiply(data.sum, rate),
 				rate,
 				id: uid(),
 			}]
