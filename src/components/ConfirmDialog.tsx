@@ -15,6 +15,11 @@ export const ConfirmDialog = ({
 	onCancel,
 	onConfirm,
 }: ConfirmDialogProps) => {
+	const handleConfirm = () => {
+		onConfirm()
+		onCancel()
+	}
+
 	return (
 		<Dialog
 			open={isOpen}
@@ -33,7 +38,7 @@ export const ConfirmDialog = ({
                     Cancel
 				</Button>
 				<Button
-					onClick={() => onConfirm()}
+					onClick={handleConfirm}
 					color='error'
 				>
                     Confirm

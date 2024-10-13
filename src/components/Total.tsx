@@ -16,14 +16,7 @@ interface TotalProps {
 
 export const Total = ({ parsedIncomesSums }: TotalProps) => {
 	return (
-		<Box
-			sx={{
-				marginTop: 2,
-				display: 'inline-grid',
-				gap: 2,
-				gridTemplateColumns: '1fr 1fr',
-			}}
-		>
+		<Box>
 			<TableContainer>
 				<Table>
 					<TableHead>

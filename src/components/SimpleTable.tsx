@@ -18,12 +18,14 @@ interface SimpleTableProps {
     incomes: Income[];
     setIncomes: (incomes: Income[]) => void;
     setEditId: (id: string) => void;
+	tableRef: React.RefObject<HTMLDivElement>;
 }
 
 export const SimpleTable = ({
 	incomes,
 	setIncomes,
 	setEditId,
+	tableRef,
 }: SimpleTableProps) => {
 	const [idToDelete, setIdToDelete] = useState<string>('')
 
@@ -38,7 +40,7 @@ export const SimpleTable = ({
 
 	return (
 		<>
-			<TableContainer>
+			<TableContainer ref={tableRef}>
 				<Table>
 					<TableHead>
 						<TableRow>
@@ -61,7 +63,7 @@ export const SimpleTable = ({
 								<TableCell>{income.currency}</TableCell>
 								<TableCell>{income.rate}</TableCell>
 								<TableCell>{income.uahSum.toFixed(2)}</TableCell>
-								<TableCell>
+								<TableCell align='center'>
 									<IconButton
 										onClick={() => {
 											setEditId(income.id)

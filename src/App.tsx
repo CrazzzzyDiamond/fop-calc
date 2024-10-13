@@ -6,7 +6,7 @@ function App() {
 	return (
 		<Box
 			sx={{
-				backgroundColor: '#D2E0FB',
+				backgroundColor: '#efd9b4',
 				minHeight: '100vh',
 			}}
 		>

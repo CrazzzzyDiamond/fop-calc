@@ -26,7 +26,8 @@ export default [
 			'semi': ['error', 'never'],
 			'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 0 }],
 			'@typescript-eslint/no-require-imports': [0, 'never'],
-			'indent': ['error', 'tab']
+			'indent': ['error', 'tab'],
+			'object-curly-spacing': ['error', 'always'],
 		}
 	},
 ]

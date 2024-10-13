@@ -20,9 +20,9 @@ export const AppBar = () => {
 
 	return (
 		<MUIAppBar
-			position='static'
+			position='sticky'
 			sx={{
-				backgroundColor: '#3f51b5',
+				backgroundColor: '#4d6160',
 			}}
 		>
 			<Toolbar variant='dense'>
