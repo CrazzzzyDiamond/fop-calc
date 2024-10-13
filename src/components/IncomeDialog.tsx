@@ -12,6 +12,7 @@ import Select from '@mui/material/Select'
 import { useForm, Controller } from 'react-hook-form'
 import dayjs from 'dayjs'
 import { multiply } from 'mathjs'
+import { useTranslation } from 'react-i18next'
 
 import { getExchangeRate } from '../helpers/getExchangeRate'
 import { uid } from '../helpers/generateId'
@@ -35,6 +36,8 @@ export const IncomeDialog = ({
 	setEditId,
 	parsedIncomesSums,
 }: IncomeDialogProps) => {
+	const { t } = useTranslation()
+
 	const {
 		control,
 		handleSubmit
@@ -83,7 +86,7 @@ export const IncomeDialog = ({
 	return (
 		<Dialog open={isOpen || !!editId}>
 			<form onSubmit={handleSubmit(submitFormData)}>
-				<DialogTitle>Add income</DialogTitle>
+				<DialogTitle>{t('addIncome')}</DialogTitle>
 				<DialogContent
 					sx={{
 						padding: 2,
@@ -103,7 +106,7 @@ export const IncomeDialog = ({
 							render={({ field }) => (
 								<TextField
 									{...field}
-									label="Sum"
+									label={t('sum')}
 									required
 								/>
 							)}
@@ -114,7 +117,7 @@ export const IncomeDialog = ({
 							render={({ field }) => (
 								<DatePicker
 									{...field}
-									label="Date"
+									label={t('date')}
 									views={['day', 'month']}
 								/>
 							)}
@@ -128,13 +131,13 @@ export const IncomeDialog = ({
 									<InputLabel
 										id="demo-simple-select-autowidth-label"
 									>
-                                        Currency
+										{t('currency')}
 									</InputLabel>
 									<Select
 										labelId="demo-simple-select-autowidth-label"
 										id="demo-simple-select-autowidth"
 										fullWidth
-										label="Currency"
+										label={t('currency')}
 										{...field}
 									>
 										{CURRENCY_OPTIONS.map((currency) => (
@@ -158,14 +161,14 @@ export const IncomeDialog = ({
 						color="secondary"
 						variant="outlined"
 					>
-                        Cancel
+						{t('cancel')}
 					</Button>
 					<Button
 						color="primary"
 						variant="contained"
 						type="submit"
 					>
-                        Add
+						{t('add')}
 					</Button>
 				</DialogActions>
 			</form>

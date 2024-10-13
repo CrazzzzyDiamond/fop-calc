@@ -3,6 +3,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
+import { useTranslation } from 'react-i18next'
 
 interface ConfirmDialogProps {
     isOpen: boolean;
@@ -15,6 +16,8 @@ export const ConfirmDialog = ({
 	onCancel,
 	onConfirm,
 }: ConfirmDialogProps) => {
+	const { t } = useTranslation()
+
 	const handleConfirm = () => {
 		onConfirm()
 		onCancel()
@@ -26,22 +29,22 @@ export const ConfirmDialog = ({
 			onClose={onCancel}
 		>
 			<DialogTitle>
-                Are you sure?
+				{t('areYouSure')}
 			</DialogTitle>
 			<DialogContent>
-                This action cannot be undone.
+				{t('canNotBeUndone')}
 			</DialogContent>
 			<DialogActions>
 				<Button
 					onClick={onCancel}
 				>
-                    Cancel
+					{t('cancel')}
 				</Button>
 				<Button
 					onClick={handleConfirm}
 					color='error'
 				>
-                    Confirm
+					{t('confirm')}
 				</Button>
 			</DialogActions>
 		</Dialog>

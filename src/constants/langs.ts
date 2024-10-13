@@ -4,7 +4,7 @@ export const LANGS_OPTIONS = [
 		label: 'English',
 	},
 	{
-		value: 'uk',
+		value: 'ua',
 		label: 'Українська',
 	},
 ]

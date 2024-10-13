@@ -4,6 +4,7 @@ import {
 	Button,
 	Paper,
 } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 import { IncomeDialog } from './IncomeDialog'
 import { Income } from '@src/types/Income'
@@ -14,6 +15,7 @@ import { Total } from './Total'
 import { useElementRect }   from '@src/hooks/useElementRect'
 
 export const Incomes = () => {
+	const { t } = useTranslation()
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [isTableFullHeight, setIsTableFullHeight] = useState(false)
 	const [editId, setEditId] = useState<string>('')
@@ -128,7 +130,7 @@ export const Incomes = () => {
 										},
 									}}
 								>
-                            		Add income
+                            		{t('addIncome')}
 								</Button>
 							</Box>
 						</Paper>

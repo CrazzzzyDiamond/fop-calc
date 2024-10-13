@@ -10,6 +10,8 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
+import { useTranslation } from 'react-i18next'
+
 import { Income } from '../types/Income'
 import { parseeIncomesSimple } from '../helpers/parseIncomes'
 import { ConfirmDialog } from './ConfirmDialog'
@@ -27,6 +29,7 @@ export const SimpleTable = ({
 	setEditId,
 	tableRef,
 }: SimpleTableProps) => {
+	const { t } = useTranslation()
 	const [idToDelete, setIdToDelete] = useState<string>('')
 
 	const parsedIncomes = parseeIncomesSimple(incomes)
@@ -44,11 +47,11 @@ export const SimpleTable = ({
 				<Table>
 					<TableHead>
 						<TableRow>
-							<TableCell variant='head'>Date</TableCell>
-							<TableCell variant='head'>Sum</TableCell>
-							<TableCell variant='head'>Currency</TableCell>
-							<TableCell variant='head'>Rate</TableCell>
-							<TableCell variant='head'>Uah Sum</TableCell>
+							<TableCell variant='head'>{t('date')}</TableCell>
+							<TableCell variant='head'>{t('sum')}</TableCell>
+							<TableCell variant='head'>{t('currency')}</TableCell>
+							<TableCell variant='head'>{t('rate')}</TableCell>
+							<TableCell variant='head'>{t('uahSum')}</TableCell>
 							<TableCell />
 						</TableRow>
 					</TableHead>

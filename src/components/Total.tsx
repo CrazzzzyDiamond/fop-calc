@@ -7,6 +7,7 @@ import {
 	TableRow,
 	Box,
 } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 import { TotalSums } from '../types/Income'
 
@@ -15,6 +16,8 @@ interface TotalProps {
 }
 
 export const Total = ({ parsedIncomesSums }: TotalProps) => {
+	const { t } = useTranslation()
+
 	return (
 		<Box>
 			<TableContainer>
@@ -22,10 +25,10 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 					<TableHead>
 						<TableRow>
 							<TableCell variant='head'>
-                                Period
+								{t('period')}
 							</TableCell>
 							<TableCell variant='head'>
-                                Sum
+								{t('sum')}
 							</TableCell>
 							<TableCell variant='head'>
                                 3%
@@ -39,7 +42,7 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 						{Object.entries(parsedIncomesSums.quarter).map(([quarter, total]) => (
 							<TableRow key={quarter} hover>
 								<TableCell>
-									{quarter}
+									{t(quarter)}
 								</TableCell>
 								<TableCell>
 									{total.sum}
@@ -53,9 +56,9 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 							</TableRow>
 						))}
 						{Object.entries(parsedIncomesSums.half).map(([half, total]) => (
-							<TableRow key={half} hover >
+							<TableRow key={half} hover>
 								<TableCell>
-									{half}
+									{t(half)}
 								</TableCell>
 								<TableCell>
 									{total.sum}
@@ -70,7 +73,7 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 						))}
 						<TableRow hover>
 							<TableCell>
-                                Year
+								{t('year')}
 							</TableCell>
 							<TableCell>
 								{parsedIncomesSums.year.sum}

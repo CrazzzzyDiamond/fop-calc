@@ -5,7 +5,7 @@ import { Quarter } from '../enums/Quarter'
 import { Month } from '../enums/Month'
 import { ParsedIncomeTable, TotalSums } from '../types/Income'
 import { defaultTable } from '../constants/defaultTable'
-import { evaluate, round, add} from 'mathjs'
+import { evaluate, round, add } from 'mathjs'
 dayjs.extend(CustomParseFormat)
 
 const monthNames = [
@@ -117,12 +117,12 @@ export const parseIncomesSums = (incomes: Income[]): TotalSums => {
 			}
 		},
 		half: {
-			first: {
+			firstHalf: {
 				sum: round(firstHalfSum, 2),
 				percentage3: round(evaluate(`(${firstHalfSum} * 3) / 100`), 2),
 				percentage5: round(evaluate(`(${firstHalfSum} * 5) / 100`), 2)
 			},
-			second: {
+			secondHalf: {
 				sum: round(secondHalfSum, 2),
 				percentage3: round(evaluate(`(${secondHalfSum} * 3) / 100`), 2),
 				percentage5: round(evaluate(`(${secondHalfSum} * 5) / 100`), 2)

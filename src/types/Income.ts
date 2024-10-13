@@ -47,8 +47,8 @@ export interface TotalSums {
         [Quarter.Q4]: Total;
     }
     half: {
-        first: Total;
-        second: Total;
+        firstHalf: Total;
+        secondHalf: Total;
     }
     year: Total;
 }
