@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import {
 	Box,
 	Button,
@@ -20,12 +20,19 @@ export const Incomes = () => {
 	const [isTableFullHeight, setIsTableFullHeight] = useState(false)
 	const [editId, setEditId] = useState<string>('')
 	const [incomes, setIncomes] = useState<Income[]>([])
-	const tableRef = useRef<HTMLDivElement>(null)
-	const buttonRef = useRef<HTMLButtonElement>(null)
+	const tableRef = useRef<HTMLDivElement | null>(null)
+	const buttonRef = useRef<HTMLButtonElement | null>(null)
 
 	const parsedIncomesSums = parseIncomesSums(incomes)
-	const position = useElementRect(tableRef)
+	const { position, checkElementPosition } = useElementRect()
 	const buttonWidth = buttonRef.current?.offsetWidth || 0
+
+	const tableRefCallback = useCallback((node: HTMLDivElement) => {
+		if (node) {
+			tableRef.current = node
+			checkElementPosition(node)
+		}
+	}, [])
 
 	const checkTableHeight = () => {
 		if (tableRef.current) {
@@ -39,6 +46,13 @@ export const Incomes = () => {
 			}
 		}
 	}
+
+	const addButtonRefCallback = useCallback((node: HTMLButtonElement) => {
+		if (node) {
+			buttonRef.current = node
+			checkTableHeight()
+		}
+	}, [])
 
 	useEffect(() => {
 		window.addEventListener('resize', checkTableHeight)
@@ -64,6 +78,10 @@ export const Incomes = () => {
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
+				['@media (max-width: 1230px)']: {
+					padding: 2,
+					paddingBottom: 10,
+				},
 			}}
 		>
 			{incomes.length === 0 && (
@@ -78,6 +96,10 @@ export const Incomes = () => {
 						display: 'flex',
 						gap: 4,
 						alignItems: 'flex-start',
+						['@media (max-width: 1230px)']: {
+							display: 'block',
+							width: '100%',
+						},
 					}}
 				>
 					<Paper
@@ -86,6 +108,10 @@ export const Incomes = () => {
 							position: 'sticky',
 							top: 80,
 							padding: 2,
+							['@media (max-width: 1230px)']: {
+								position: 'static',
+								marginBottom: 4,
+							},
 						}}
 					>
 						<Total parsedIncomesSums={parsedIncomesSums} />
@@ -94,6 +120,10 @@ export const Incomes = () => {
 						sx={{
 							display: 'flex',
 							gap: 4,
+							['@media (max-width: 1230px)']: {
+								display: 'block',
+								width: '100%',
+							},
 						}}
 					>
 						<Paper
@@ -106,7 +136,7 @@ export const Incomes = () => {
 								incomes={incomes}
 								setIncomes={setIncomes}
 								setEditId={setEditId}
-								tableRef={tableRef}
+								tableRef={tableRefCallback}
 							/>
 
 							<Box
@@ -117,17 +147,25 @@ export const Incomes = () => {
 								}}
 							>
 								<Button
-									ref={buttonRef}
+									ref={addButtonRefCallback}
 									variant="contained"
 									color="primary"
 									onClick={() => setIsDialogOpen(true)}
 									sx={{
 										backgroundColor: '#292522',
-										...isTableFullHeight && {
+										['@media (min-width: 1230px)']: {
+											...isTableFullHeight && {
+												position: 'fixed',
+												bottom: 20,
+												left: position.right - buttonWidth,
+											},
+										},
+										['@media (max-width: 1230px)']: {
 											position: 'fixed',
 											bottom: 20,
-											left: position.right - buttonWidth,
-										},
+											left: position.left,
+											width: position.width,
+										}
 									}}
 								>
                             		{t('addIncome')}

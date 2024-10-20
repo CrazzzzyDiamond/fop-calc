@@ -21,7 +21,7 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 	return (
 		<Box>
 			<TableContainer>
-				<Table>
+				<Table sx={{ minWidth: 520 }}>
 					<TableHead>
 						<TableRow>
 							<TableCell variant='head'>

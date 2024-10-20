@@ -6,7 +6,7 @@ import {
 	TableRow,
 	TableCell,
 	TableBody,
-	IconButton
+	IconButton,
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -20,7 +20,7 @@ interface SimpleTableProps {
     incomes: Income[];
     setIncomes: (incomes: Income[]) => void;
     setEditId: (id: string) => void;
-	tableRef: React.RefObject<HTMLDivElement>;
+	tableRef: (node: HTMLDivElement) => void;
 }
 
 export const SimpleTable = ({
@@ -43,8 +43,10 @@ export const SimpleTable = ({
 
 	return (
 		<>
-			<TableContainer ref={tableRef}>
-				<Table>
+			<TableContainer 
+				ref={tableRef}
+			>
+				<Table sx={{ minWidth: 720 }}>
 					<TableHead>
 						<TableRow>
 							<TableCell variant='head'>{t('date')}</TableCell>

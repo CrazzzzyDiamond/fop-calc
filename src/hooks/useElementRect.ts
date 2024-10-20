@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-export const useElementRect = (elementRef: React.RefObject<HTMLDivElement>) => {
+export const useElementRect = () => {
 	const [position, setPosition] = useState({
 		right: 0,
 		bottom: 0,
@@ -10,24 +10,13 @@ export const useElementRect = (elementRef: React.RefObject<HTMLDivElement>) => {
 		height: 0,
 	})
 
-	const checkElementPosition = () => {
-		if (elementRef.current) {
-			const elementRect = elementRef.current.getBoundingClientRect()
-
-			console.log(elementRect)
+	const checkElementPosition = (el: HTMLDivElement) => {
+		if (el) {
+			const elementRect = el.getBoundingClientRect()
 
 			setPosition(elementRect)
 		}
 	}
 
-	useEffect(() => {
-		checkElementPosition()
-		window.addEventListener('resize', checkElementPosition)
-
-		return () => {
-			window.removeEventListener('resize', checkElementPosition)
-		}
-	}, [])
-
-	return position
+	return { position, checkElementPosition }
 }
