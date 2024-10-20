@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
+import dayjs from 'dayjs'
 import { Box } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import 'dayjs/locale/uk'
+import 'dayjs/locale/en'
 
 import { AppBar } from './components/AppBar'
 import { Incomes } from './components/Incomes'
@@ -13,6 +16,7 @@ function App() {
 
 		if (lang === 'ua') {
 			i18n.changeLanguage('ua')
+			dayjs.locale('uk')
 		}
 	}, [i18n])
 
