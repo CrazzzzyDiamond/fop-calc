@@ -23,7 +23,7 @@ function App() {
 	return (
 		<Box
 			sx={{
-				backgroundColor: '#efd9b4',
+				background: 'linear-gradient(135deg, #a2c0cc, #fceea7)',
 				minHeight: '100vh',
 			}}
 		>

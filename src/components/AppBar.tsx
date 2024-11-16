@@ -6,13 +6,14 @@ import {
 } from '@mui/material'
 
 import { LangSelect } from './LangSelect'
+import { ClearButton } from './ClearButton'
 
 export const AppBar = () => {
 	return (
 		<MUIAppBar
 			position='sticky'
 			sx={{
-				backgroundColor: '#4d6160',
+				backgroundColor: '#1071f2',
 			}}
 		>
 			<Toolbar variant='dense'>
@@ -27,7 +28,10 @@ export const AppBar = () => {
 					<Typography variant="h6" color="inherit" component="div">
                     	FOP Calculator
 					</Typography>
-					<LangSelect />
+					<Box>
+						<ClearButton />
+						<LangSelect />
+					</Box>
 				</Box>
 			</Toolbar>
 		</MUIAppBar>

@@ -65,7 +65,7 @@ export const Incomes = () => {
 	useEffect(() => {
 		const storedIncomes = localStorage.getItem('incomes')
 
-		if (storedIncomes) {
+		if (storedIncomes && storedIncomes !== 'null') {
 			setIncomes(JSON.parse(storedIncomes))
 		}
 	}, [])
@@ -152,7 +152,8 @@ export const Incomes = () => {
 									color="primary"
 									onClick={() => setIsDialogOpen(true)}
 									sx={{
-										backgroundColor: '#292522',
+										backgroundColor: '#1071f2',
+										// color: '#29323d',
 										['@media (min-width: 1230px)']: {
 											...isTableFullHeight && {
 												position: 'fixed',

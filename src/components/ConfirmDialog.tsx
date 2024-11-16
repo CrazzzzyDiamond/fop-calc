@@ -9,12 +9,14 @@ interface ConfirmDialogProps {
     isOpen: boolean;
     onCancel: () => void;
     onConfirm: () => void;
+	title?: string;
 }
 
 export const ConfirmDialog = ({
 	isOpen,
 	onCancel,
 	onConfirm,
+	title,
 }: ConfirmDialogProps) => {
 	const { t } = useTranslation()
 
@@ -29,7 +31,7 @@ export const ConfirmDialog = ({
 			onClose={onCancel}
 		>
 			<DialogTitle>
-				{t('areYouSure')}
+				{title || t('areYouSure')}
 			</DialogTitle>
 			<DialogContent>
 				{t('canNotBeUndone')}

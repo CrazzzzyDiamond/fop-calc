@@ -32,6 +32,9 @@ i18n
 					secondHalf: 'Second half year',
 					areYouSure: 'Are you sure?',
 					canNotBeUndone: 'This action can not be undone',
+					clear: 'Clear',
+					clearTitle: 'Clear all data?',
+					noIncomes: 'No data',
 				},
 			},
 			ua: {
@@ -55,6 +58,9 @@ i18n
 					secondHalf: 'Друга половина року',
 					areYouSure: 'Ви впевнені?',
 					canNotBeUndone: 'Цю дію не можна скасувати',
+					clear: 'Очистити',
+					clearTitle: 'Очистити всі дані?',
+					noIncomes: 'Записів немає',
 				},
 			}
 		},

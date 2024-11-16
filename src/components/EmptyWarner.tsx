@@ -4,12 +4,15 @@ import {
 	Paper,
 	Typography
 } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 interface EmptyWarnerProps {
     handleAdd: () => void;
 }
 
 export const EmptyWarner = ({ handleAdd }: EmptyWarnerProps) => {
+	const { t } = useTranslation()
+
 	return (
 		<Box
 			sx={{
@@ -23,7 +26,9 @@ export const EmptyWarner = ({ handleAdd }: EmptyWarnerProps) => {
 					textAlign: 'center',
 				}}
 			>
-				<Typography variant='h3'>No incomes</Typography>
+				<Typography variant='h3'>
+					{t('noIncomes')}
+				</Typography>
 				<Box
 					m={5}
 				>
@@ -32,7 +37,7 @@ export const EmptyWarner = ({ handleAdd }: EmptyWarnerProps) => {
 						onClick={handleAdd}
 						size='large'
 					>
-                        Add Income
+						{t('addIncome')}
 					</Button>
 				</Box>
 			</Paper>
