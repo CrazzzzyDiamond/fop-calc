@@ -42,6 +42,31 @@ const buttonWrapperStyle = {
 	marginTop: 2,
 }
 
+const buttonStyle = (
+	isTableFullHeight: boolean,
+	position: {
+		left: number,
+		right: number,
+		width: number,
+	},
+	buttonWidth: number,
+) => ({
+	backgroundColor: '#1071f2',
+	['@media (min-width: 1230px)']: {
+		...isTableFullHeight && {
+			position: 'fixed',
+			bottom: 20,
+			left: position.right - buttonWidth,
+		},
+	},
+	['@media (max-width: 1230px)']: {
+		position: 'fixed',
+		bottom: 20,
+		left: position?.left,
+		width: position?.width,
+	},
+})
+
 export const SimpleTable = ({
 	incomes,
 	setIncomes,
@@ -133,16 +158,12 @@ export const SimpleTable = ({
 									<TableCell>{income.uahSum.toFixed(2)}</TableCell>
 									<TableCell align='center'>
 										<IconButton
-											onClick={() => {
-												setEditId(income.id)
-											}}
+											onClick={() => setEditId(income.id)}
 										>
 											<EditIcon />
 										</IconButton>
 										<IconButton
-											onClick={() => {
-												setIdToDelete(income.id)
-											}}
+											onClick={() => setIdToDelete(income.id)}
 										>
 											<DeleteIcon />
 										</IconButton>
@@ -159,22 +180,7 @@ export const SimpleTable = ({
 						variant="contained"
 						color="primary"
 						onClick={() => setIsAddDialogOpen(true)}
-						sx={{
-							backgroundColor: '#1071f2',
-							['@media (min-width: 1230px)']: {
-								...isTableFullHeight && {
-									position: 'fixed',
-									bottom: 20,
-									left: position.right - buttonWidth,
-								},
-							},
-							['@media (max-width: 1230px)']: {
-								position: 'fixed',
-								bottom: 20,
-								left: position.left,
-								width: position.width,
-							}
-						}}
+						sx={buttonStyle(isTableFullHeight, position, buttonWidth)}
 					>
 						{t('addIncome')}
 					</Button>
