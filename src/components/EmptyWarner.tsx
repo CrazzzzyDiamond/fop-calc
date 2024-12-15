@@ -10,21 +10,19 @@ interface EmptyWarnerProps {
     handleAdd: () => void;
 }
 
+const emptyPaperStyle = {
+	padding: 6,
+	textAlign: 'center',
+}
+
 export const EmptyWarner = ({ handleAdd }: EmptyWarnerProps) => {
 	const { t } = useTranslation()
 
 	return (
-		<Box
-			sx={{
-				padding: 4,
-			}}
-		>
+		<Box sx={{ padding: 4 }}>
 			<Paper
 				elevation={3}
-				sx={{
-					padding: 6,
-					textAlign: 'center',
-				}}
+				sx={emptyPaperStyle}
 			>
 				<Typography variant='h3'>
 					{t('noIncomes')}

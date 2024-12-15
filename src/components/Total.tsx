@@ -5,7 +5,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	Box,
+	Paper,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
@@ -15,11 +15,24 @@ interface TotalProps {
     parsedIncomesSums: TotalSums;
 }
 
+const totaleWrapperStyle = {	
+	position: 'sticky',
+	top: 80,
+	padding: 2,
+	['@media (max-width: 1230px)']: {
+		position: 'static',
+		marginBottom: 4,
+	},
+}
+
 export const Total = ({ parsedIncomesSums }: TotalProps) => {
 	const { t } = useTranslation()
 
 	return (
-		<Box>
+		<Paper
+			elevation={3}
+			sx={totaleWrapperStyle}
+		>
 			<TableContainer>
 				<Table sx={{ minWidth: 520 }}>
 					<TableHead>
@@ -88,6 +101,6 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-		</Box>
+		</Paper>
 	)
 }

@@ -8,6 +8,11 @@ import 'dayjs/locale/en'
 import { AppBar } from './components/AppBar'
 import { Incomes } from './components/Incomes'
 
+const mainBoxStyle = {
+	background: 'linear-gradient(135deg, #a2c0cc, #fceea7)',
+	minHeight: '100vh',
+}
+
 function App() {
 	const { i18n } = useTranslation()
 	
@@ -22,10 +27,7 @@ function App() {
 
 	return (
 		<Box
-			sx={{
-				background: 'linear-gradient(135deg, #a2c0cc, #fceea7)',
-				minHeight: '100vh',
-			}}
+			sx={mainBoxStyle}
 		>
 			<AppBar />
 			<Incomes />

@@ -4,6 +4,12 @@ import { useTranslation } from 'react-i18next'
 
 import { ConfirmDialog } from './ConfirmDialog'
 
+const clearButtonStyle = {
+	marginRight: '1rem',
+	backgroundColor: '#1071f2',
+	color: 'white',
+}
+
 export const ClearButton = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { t } = useTranslation()
@@ -15,11 +21,7 @@ export const ClearButton = () => {
 	return (
 		<>
 			<Button
-				sx={{
-					marginRight: '1rem',
-					backgroundColor: '#1071f2',
-					color: 'white',
-				}}
+				sx={clearButtonStyle}
 				onClick={() => setIsOpen(true)}
 			>
             	{ t('clear')}

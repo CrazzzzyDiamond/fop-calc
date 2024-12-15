@@ -8,22 +8,26 @@ import {
 import { LangSelect } from './LangSelect'
 import { ClearButton } from './ClearButton'
 
+const appBarStyle = {
+	backgroundColor: '#1071f2',
+}
+
+const toolbarStyle = {
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	width: '100%',
+}
+
 export const AppBar = () => {
 	return (
 		<MUIAppBar
 			position='sticky'
-			sx={{
-				backgroundColor: '#1071f2',
-			}}
+			sx={appBarStyle}
 		>
 			<Toolbar variant='dense'>
 				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						width: '100%',
-					}}
+					sx={toolbarStyle}
 				>
 					<Typography variant="h6" color="inherit" component="div">
                     	FOP Calculator

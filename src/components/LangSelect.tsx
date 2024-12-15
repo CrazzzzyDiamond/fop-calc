@@ -13,6 +13,10 @@ const LANG = {
 	en: 'en',
 }
 
+const langSelectorStyle = {
+	backgroundColor: 'white',
+}
+
 export const LangSelect = () => {
 	const { i18n } = useTranslation()
 	const lang = localStorage.getItem('lang') || 'en'
@@ -34,9 +38,7 @@ export const LangSelect = () => {
 			onChange={handleChange}
 			size='small'
 			variant='outlined'
-			sx={{
-				backgroundColor: 'white',
-			}}
+			sx={langSelectorStyle}
 		>
 			{LANGS_OPTIONS.map(lang => (
 				<MenuItem
