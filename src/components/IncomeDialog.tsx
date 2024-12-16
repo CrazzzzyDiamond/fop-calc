@@ -14,16 +14,24 @@ import dayjs from 'dayjs'
 import { multiply } from 'mathjs'
 import { useTranslation } from 'react-i18next'
 
+import { Income, TotalSums } from '@src/types/Income'
+
 import { getExchangeRate } from '../helpers/getExchangeRate'
 import { uid } from '../helpers/generateId'
 
 interface IncomeDialogProps {
     isOpen: boolean;
     onCancel: () => void;
-    setIncomes: (incomes: any) => void;
+	setIncomes: React.Dispatch<React.SetStateAction<Income[]>>;
     editId?: string;
     setEditId?: (id: string) => void;
-    parsedIncomesSums: any;
+    parsedIncomesSums: TotalSums;
+}
+
+interface FormData {
+	sum: string;
+	date: dayjs.Dayjs;
+	currency: string;
 }
 
 const CURRENCY_OPTIONS = ['UAH', 'USD', 'EUR']
@@ -34,7 +42,6 @@ export const IncomeDialog = ({
 	setIncomes,
 	editId,
 	setEditId,
-	parsedIncomesSums,
 }: IncomeDialogProps) => {
 	const { t } = useTranslation()
 
@@ -49,38 +56,43 @@ export const IncomeDialog = ({
 		}
 	})
 
-	const submitFormData = async (data: any) => {
+	const submitFormData = async (data: FormData) => {
 		const isUah = data.currency === 'UAH'
 		let rate = 1
-
+	
 		if (!isUah) {
 			rate = await getExchangeRate(
 				data.currency,
 				data.date.format('YYYYMMDD')
 			)
 		}
-
-		setIncomes((prevIncomes: any) => {
-			const newIncomes = [...prevIncomes, {
+	
+		setIncomes((prevIncomes: Income[]) => {
+			const newIncome: Income = {
 				sum: data.sum,
 				date: data.date.format('DD.MM.YYYY'),
 				currency: data.currency,
-				uahSum: multiply(data.sum, rate),
+				uahSum: multiply(Number(data.sum), rate) as unknown as number,
 				rate,
 				id: uid(),
-			}]
-
+			}
+	
+			const newIncomes = [...prevIncomes, newIncome]
+	
 			localStorage.setItem('incomes', JSON.stringify(newIncomes))
-
+	
 			return newIncomes
 		})
-
+	
 		onCancel()
 	}
 
 	const handleCancelClick = () => {
 		onCancel()
-		setEditId && setEditId('')
+
+		if (editId && setEditId) {
+			setEditId('')
+		}
 	}
 
 	return (
