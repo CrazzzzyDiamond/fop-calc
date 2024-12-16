@@ -64,14 +64,16 @@ export const Incomes = () => {
 				</Box>
 			)}
 
-			<IncomeDialog
-				isOpen={isAddDialogOpen}
-				onCancel={() => setIsAddDialogOpen(false)}
-				setIncomes={setIncomes}
-				editId={editId}
-				setEditId={setEditId}
-				parsedIncomesSums={parsedIncomesSums}
-			/>
+			{(!!editId || isAddDialogOpen) && (
+				<IncomeDialog
+					onCancel={() => setIsAddDialogOpen(false)}
+					setIncomes={setIncomes}
+					editId={editId}
+					setEditId={setEditId}
+					parsedIncomesSums={parsedIncomesSums}
+					incomes={incomes}
+				/>
+			)}
 		</Box>
 	)
 }

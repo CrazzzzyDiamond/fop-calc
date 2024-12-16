@@ -20,12 +20,12 @@ import { getExchangeRate } from '../helpers/getExchangeRate'
 import { uid } from '../helpers/generateId'
 
 interface IncomeDialogProps {
-    isOpen: boolean;
     onCancel: () => void;
 	setIncomes: React.Dispatch<React.SetStateAction<Income[]>>;
     editId?: string;
     setEditId?: (id: string) => void;
     parsedIncomesSums: TotalSums;
+	incomes: Income[];
 }
 
 interface FormData {
@@ -37,22 +37,29 @@ interface FormData {
 const CURRENCY_OPTIONS = ['UAH', 'USD', 'EUR']
 
 export const IncomeDialog = ({
-	isOpen,
 	onCancel,
 	setIncomes,
 	editId,
 	setEditId,
+	incomes,
 }: IncomeDialogProps) => {
 	const { t } = useTranslation()
+	let currentIncome: Income | null = null
+
+	if (editId) {
+		currentIncome = incomes.find(income => income.id === editId) || null
+	}
+
+	console.log(currentIncome)
 
 	const {
 		control,
 		handleSubmit
 	} = useForm({
 		defaultValues: {
-			sum: '',
-			date: dayjs(),
-			currency: 'USD',
+			sum: currentIncome ? currentIncome.sum : '',
+			date: currentIncome ? dayjs(currentIncome.date, 'DD.MM.YYYY') : dayjs(),
+			currency: currentIncome ? currentIncome.currency : 'UAH',
 		}
 	})
 
@@ -66,25 +73,53 @@ export const IncomeDialog = ({
 				data.date.format('YYYYMMDD')
 			)
 		}
-	
-		setIncomes((prevIncomes: Income[]) => {
-			const newIncome: Income = {
-				sum: data.sum,
-				date: data.date.format('DD.MM.YYYY'),
-				currency: data.currency,
-				uahSum: multiply(Number(data.sum), rate) as unknown as number,
-				rate,
-				id: uid(),
-			}
-	
-			const newIncomes = [...prevIncomes, newIncome]
-	
-			localStorage.setItem('incomes', JSON.stringify(newIncomes))
-	
-			return newIncomes
-		})
-	
+
+		// TODO: Refactor this
+		if (!editId) {
+			setIncomes((prevIncomes: Income[]) => {
+				const newIncome: Income = {
+					sum: data.sum,
+					date: data.date.format('DD.MM.YYYY'),
+					currency: data.currency,
+					uahSum: multiply(Number(data.sum), rate) as unknown as number,
+					rate,
+					id: uid(),
+				}
+		
+				const newIncomes = [...prevIncomes, newIncome]
+		
+				localStorage.setItem('incomes', JSON.stringify(newIncomes))
+		
+				return newIncomes
+			})
+		} else {
+			setIncomes((prevIncomes: Income[]) => {
+				const newIncomes = prevIncomes.map(income => {
+					if (income.id === editId) {
+						return {
+							...income,
+							sum: data.sum,
+							date: data.date.format('DD.MM.YYYY'),
+							currency: data.currency,
+							uahSum: multiply(Number(data.sum), rate) as unknown as number,
+							rate,
+						}
+					}
+		
+					return income
+				})
+		
+				localStorage.setItem('incomes', JSON.stringify(newIncomes))
+		
+				return newIncomes
+			})
+		}
+
 		onCancel()
+
+		if (editId && setEditId) {
+			setEditId('')
+		}
 	}
 
 	const handleCancelClick = () => {
@@ -96,7 +131,7 @@ export const IncomeDialog = ({
 	}
 
 	return (
-		<Dialog open={isOpen || !!editId}>
+		<Dialog open={true}>
 			<form onSubmit={handleSubmit(submitFormData)}>
 				<DialogTitle>{t('addIncome')}</DialogTitle>
 				<DialogContent
