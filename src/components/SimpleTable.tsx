@@ -30,7 +30,7 @@ interface SimpleTableProps {
 const mainBoxStyle = {
 	display: 'flex',
 	gap: 4,
-	['@media (max-width: 1230px)']: {
+	['@media (max-width: 1372px)']: {
 		display: 'block',
 		width: '100%',
 	},
@@ -52,14 +52,14 @@ const buttonStyle = (
 	buttonWidth: number,
 ) => ({
 	backgroundColor: '#1071f2',
-	['@media (min-width: 1230px)']: {
+	['@media (min-width: 1372px)']: {
 		...isTableFullHeight && {
 			position: 'fixed',
 			bottom: 20,
 			left: position.right - buttonWidth,
 		},
 	},
-	['@media (max-width: 1230px)']: {
+	['@media (max-width: 1372px)']: {
 		position: 'fixed',
 		bottom: 20,
 		left: position?.left,

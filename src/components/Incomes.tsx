@@ -15,7 +15,7 @@ const incomesWrapperStyle = {
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	['@media (max-width: 1230px)']: {
+	['@media (max-width: 1372px)']: {
 		padding: 2,
 		paddingBottom: 10,
 	},
@@ -25,7 +25,7 @@ const incomesContainerStyle = {
 	display: 'flex',
 	gap: 4,
 	alignItems: 'flex-start',
-	['@media (max-width: 1230px)']: {
+	['@media (max-width: 1372px)']: {
 		display: 'block',
 		width: '100%',
 	},

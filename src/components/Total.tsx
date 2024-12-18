@@ -19,7 +19,7 @@ const totaleWrapperStyle = {
 	position: 'sticky',
 	top: 80,
 	padding: 2,
-	['@media (max-width: 1230px)']: {
+	['@media (max-width: 1372px)']: {
 		position: 'static',
 		marginBottom: 4,
 	},
