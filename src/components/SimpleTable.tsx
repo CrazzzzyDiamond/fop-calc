@@ -108,6 +108,8 @@ export const SimpleTable = ({
 				setIsTableFullHeight(false)
 			}
 		}
+
+		checkElementPosition(tableRef.current as HTMLDivElement)
 	}
 
 	const addButtonRefCallback = useCallback((node: HTMLButtonElement) => {
@@ -117,6 +119,7 @@ export const SimpleTable = ({
 		}
 	}, [])
 
+	// TODO: refactor behavior
 	useEffect(() => {
 		window.addEventListener('resize', checkTableHeight)
 
