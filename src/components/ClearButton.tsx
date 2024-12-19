@@ -16,6 +16,7 @@ export const ClearButton = () => {
 
 	const handleClear = () => {
 		localStorage.setItem('incomes', JSON.stringify(null))
+		window.dispatchEvent(new Event('storage'))
 	}
 
 	return (

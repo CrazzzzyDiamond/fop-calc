@@ -50,8 +50,6 @@ export const IncomeDialog = ({
 		currentIncome = incomes.find(income => income.id === editId) || null
 	}
 
-	console.log(currentIncome)
-
 	const {
 		control,
 		handleSubmit

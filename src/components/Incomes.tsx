@@ -37,11 +37,25 @@ export const Incomes = () => {
 	const [incomes, setIncomes] = useState<Income[]>([])
 	const parsedIncomesSums = parseIncomesSums(incomes)
 
-	useEffect(() => {
+	const updateIncomes = () => {
 		const storedIncomes = localStorage.getItem('incomes')
 
 		if (storedIncomes && storedIncomes !== 'null') {
 			setIncomes(JSON.parse(storedIncomes))
+		}
+
+		if (storedIncomes === 'null') {
+			setIncomes([])
+		}
+	}
+
+	useEffect(() => {
+		updateIncomes()
+
+		window.addEventListener('storage', updateIncomes)
+
+		return () => {
+			window.removeEventListener('storage', updateIncomes)
 		}
 	}, [])
 
