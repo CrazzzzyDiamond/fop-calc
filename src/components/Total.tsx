@@ -44,6 +44,9 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 								{t('sum')}
 							</TableCell>
 							<TableCell variant='head'>
+                                1%
+							</TableCell>
+							<TableCell variant='head'>
                                 3%
 							</TableCell>
 							<TableCell variant='head'>
@@ -59,6 +62,9 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 								</TableCell>
 								<TableCell>
 									{total.sum}
+								</TableCell>
+								<TableCell>
+									{total.percentage1}
 								</TableCell>
 								<TableCell>
 									{total.percentage3}
@@ -77,6 +83,9 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 									{total.sum}
 								</TableCell>
 								<TableCell>
+									{total.percentage1}
+								</TableCell>
+								<TableCell>
 									{total.percentage3}
 								</TableCell>
 								<TableCell>
@@ -90,6 +99,9 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 							</TableCell>
 							<TableCell>
 								{parsedIncomesSums.year.sum}
+							</TableCell>
+							<TableCell>
+								{parsedIncomesSums.year.percentage1}
 							</TableCell>
 							<TableCell>
 								{parsedIncomesSums.year.percentage3}

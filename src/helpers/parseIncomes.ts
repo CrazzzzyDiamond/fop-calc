@@ -97,21 +97,25 @@ export const parseIncomesSums = (incomes: Income[]): TotalSums => {
 		quarter: {
 			[Quarter.Q1]: {
 				sum: round(firstQuarterSum, 2),
+				percentage1: round(evaluate(`(${firstQuarterSum} * 1) / 100`), 2),
 				percentage3: round(evaluate(`(${firstQuarterSum} * 3) / 100`), 2),
 				percentage5: round(evaluate(`(${firstQuarterSum} * 5) / 100`), 2)
 			},
 			[Quarter.Q2]: {
 				sum: round(secondQuarterSum, 2),
+				percentage1: round(evaluate(`(${secondQuarterSum} * 1) / 100`), 2),
 				percentage3: round(evaluate(`(${secondQuarterSum} * 3) / 100`), 2),
 				percentage5: round(evaluate(`(${secondQuarterSum} * 5) / 100`), 2)
 			},
 			[Quarter.Q3]: {
 				sum: round(thirdQuarterSum, 2),
+				percentage1: round(evaluate(`(${thirdQuarterSum} * 1) / 100`), 2),
 				percentage3: round(evaluate(`(${thirdQuarterSum} * 3) / 100`), 2),
 				percentage5: round(evaluate(`(${thirdQuarterSum} * 5) / 100`), 2)
 			},
 			[Quarter.Q4]: {
 				sum: round(fourthQuarterSum, 2),
+				percentage1: round(evaluate(`(${fourthQuarterSum} * 1) / 100`), 2),
 				percentage3: round(evaluate(`(${fourthQuarterSum} * 3) / 100`), 2),
 				percentage5: round(evaluate(`(${fourthQuarterSum} * 5) / 100`), 2)
 			}
@@ -119,17 +123,20 @@ export const parseIncomesSums = (incomes: Income[]): TotalSums => {
 		half: {
 			firstHalf: {
 				sum: round(firstHalfSum, 2),
+				percentage1: round(evaluate(`(${firstHalfSum} * 1) / 100`), 2),
 				percentage3: round(evaluate(`(${firstHalfSum} * 3) / 100`), 2),
 				percentage5: round(evaluate(`(${firstHalfSum} * 5) / 100`), 2)
 			},
 			secondHalf: {
 				sum: round(secondHalfSum, 2),
+				percentage1: round(evaluate(`(${secondHalfSum} * 1) / 100`), 2),
 				percentage3: round(evaluate(`(${secondHalfSum} * 3) / 100`), 2),
 				percentage5: round(evaluate(`(${secondHalfSum} * 5) / 100`), 2)
 			}
 		},
 		year: {
 			sum: round(yearSum, 2),
+			percentage1: round(evaluate(`(${yearSum} * 1) / 100`), 2),
 			percentage3: round(evaluate(`(${yearSum} * 3) / 100`), 2),
 			percentage5: round(evaluate(`(${yearSum} * 5) / 100`), 2)
 		}

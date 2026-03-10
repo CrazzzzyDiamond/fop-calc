@@ -35,6 +35,7 @@ export interface ParsedIncomeTable {
 
 interface Total {
     sum: number;
+    percentage1: number;
     percentage3: number;
     percentage5: number;
 }
