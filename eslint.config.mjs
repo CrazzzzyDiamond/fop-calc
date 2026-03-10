@@ -20,6 +20,9 @@ export default [
 	...tseslint.configs.recommended,
 	pluginReact.configs.flat.recommended,
 	{
+		settings: {
+			react: { version: '19' }
+		},
 		rules: {
 			'react/react-in-jsx-scope': 'off',
 			'quotes': [2, 'single', { 'avoidEscape': true }],
