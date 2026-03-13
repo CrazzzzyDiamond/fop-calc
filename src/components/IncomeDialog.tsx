@@ -1,14 +1,3 @@
-import { Box, Button } from '@mui/material'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
-import TextField from '@mui/material/TextField'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
 import { useForm, Controller } from 'react-hook-form'
 import dayjs from 'dayjs'
 import { multiply } from 'mathjs'
@@ -20,17 +9,17 @@ import { getExchangeRate } from '../helpers/getExchangeRate'
 import { uid } from '../helpers/generateId'
 
 interface IncomeDialogProps {
-    onCancel: () => void;
+	onCancel: () => void;
 	setIncomes: React.Dispatch<React.SetStateAction<Income[]>>;
-    editId?: string;
-    setEditId?: (id: string) => void;
-    parsedIncomesSums: TotalSums;
+	editId?: string;
+	setEditId?: (id: string) => void;
+	parsedIncomesSums: TotalSums;
 	incomes: Income[];
 }
 
 interface FormData {
 	sum: string;
-	date: dayjs.Dayjs;
+	date: string;
 	currency: string;
 }
 
@@ -50,13 +39,12 @@ export const IncomeDialog = ({
 		currentIncome = incomes.find(income => income.id === editId) || null
 	}
 
-	const {
-		control,
-		handleSubmit
-	} = useForm({
+	const { control, handleSubmit } = useForm({
 		defaultValues: {
 			sum: currentIncome ? currentIncome.sum : '',
-			date: currentIncome ? dayjs(currentIncome.date, 'DD.MM.YYYY') : dayjs(),
+			date: currentIncome
+				? dayjs(currentIncome.date, 'DD.MM.YYYY').format('YYYY-MM-DD')
+				: dayjs().format('YYYY-MM-DD'),
 			currency: currentIncome ? currentIncome.currency : 'UAH',
 		}
 	})
@@ -64,11 +52,11 @@ export const IncomeDialog = ({
 	const submitFormData = async (data: FormData) => {
 		const isUah = data.currency === 'UAH'
 		let rate = 1
-	
+
 		if (!isUah) {
 			rate = await getExchangeRate(
 				data.currency,
-				data.date.format('YYYYMMDD')
+				dayjs(data.date).format('YYYYMMDD')
 			)
 		}
 
@@ -77,17 +65,17 @@ export const IncomeDialog = ({
 			setIncomes((prevIncomes: Income[]) => {
 				const newIncome: Income = {
 					sum: data.sum,
-					date: data.date.format('DD.MM.YYYY'),
+					date: dayjs(data.date).format('DD.MM.YYYY'),
 					currency: data.currency,
 					uahSum: multiply(Number(data.sum), rate) as unknown as number,
 					rate,
 					id: uid(),
 				}
-		
+
 				const newIncomes = [...prevIncomes, newIncome]
-		
+
 				localStorage.setItem('incomes', JSON.stringify(newIncomes))
-		
+
 				return newIncomes
 			})
 		} else {
@@ -97,18 +85,18 @@ export const IncomeDialog = ({
 						return {
 							...income,
 							sum: data.sum,
-							date: data.date.format('DD.MM.YYYY'),
+							date: dayjs(data.date).format('DD.MM.YYYY'),
 							currency: data.currency,
 							uahSum: multiply(Number(data.sum), rate) as unknown as number,
 							rate,
 						}
 					}
-		
+
 					return income
 				})
-		
+
 				localStorage.setItem('incomes', JSON.stringify(newIncomes))
-		
+
 				return newIncomes
 			})
 		}
@@ -129,42 +117,43 @@ export const IncomeDialog = ({
 	}
 
 	return (
-		<Dialog open={true}>
-			<form onSubmit={handleSubmit(submitFormData)}>
-				<DialogTitle>{t('addIncome')}</DialogTitle>
-				<DialogContent
-					sx={{
-						padding: 2,
-					}}
-				>
-					<Box
-						sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							gap: 2,
-							padding: 1,
-						}}
-					>
+		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+			<div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+				<form onSubmit={handleSubmit(submitFormData)}>
+					<div className="px-6 py-4 text-lg font-medium border-b border-gray-200">
+						{t('addIncome')}
+					</div>
+
+					<div className="px-6 py-4 flex flex-col gap-4">
 						<Controller
 							name="sum"
 							control={control}
 							render={({ field }) => (
-								<TextField
-									{...field}
-									label={t('sum')}
-									required
-								/>
+								<div className="flex flex-col gap-1">
+									<label className="text-sm font-medium text-gray-700">{t('sum')}</label>
+									<input
+										{...field}
+										type="text"
+										required
+										className="px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+									/>
+								</div>
 							)}
 						/>
+
 						<Controller
 							name="date"
 							control={control}
 							render={({ field }) => (
-								<DatePicker
-									{...field}
-									label={t('date')}
-									views={['day', 'month']}
-								/>
+								<div className="flex flex-col gap-1">
+									<label className="text-sm font-medium text-gray-700">{t('date')}</label>
+									<input
+										{...field}
+										type="date"
+										required
+										className="px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+									/>
+								</div>
 							)}
 						/>
 
@@ -172,51 +161,40 @@ export const IncomeDialog = ({
 							name="currency"
 							control={control}
 							render={({ field }) => (
-								<FormControl>
-									<InputLabel
-										id="demo-simple-select-autowidth-label"
-									>
-										{t('currency')}
-									</InputLabel>
-									<Select
-										labelId="demo-simple-select-autowidth-label"
-										id="demo-simple-select-autowidth"
-										fullWidth
-										label={t('currency')}
+								<div className="flex flex-col gap-1">
+									<label className="text-sm font-medium text-gray-700">{t('currency')}</label>
+									<select
 										{...field}
+										className="px-3 py-2 border border-gray-300 rounded text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
 									>
 										{CURRENCY_OPTIONS.map((currency) => (
-											<MenuItem key={currency} value={currency}>
+											<option key={currency} value={currency}>
 												{currency}
-											</MenuItem>
+											</option>
 										))}
-									</Select>
-								</FormControl>
+									</select>
+								</div>
 							)}
 						/>
-					</Box>
-				</DialogContent>
-				<DialogActions
-					sx={{
-						padding: 2,
-					}}
-				>
-					<Button
-						onClick={handleCancelClick}
-						color="secondary"
-						variant="outlined"
-					>
-						{t('cancel')}
-					</Button>
-					<Button
-						color="primary"
-						variant="contained"
-						type="submit"
-					>
-						{t('add')}
-					</Button>
-				</DialogActions>
-			</form>
-		</Dialog>
+					</div>
+
+					<div className="flex justify-end gap-2 px-6 pb-4">
+						<button
+							type="button"
+							className="px-4 py-2 text-sm rounded border border-gray-300 hover:bg-gray-50 cursor-pointer"
+							onClick={handleCancelClick}
+						>
+							{t('cancel')}
+						</button>
+						<button
+							type="submit"
+							className="px-4 py-2 text-sm rounded bg-[#1071f2] text-white hover:bg-blue-700 cursor-pointer"
+						>
+							{t('add')}
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
 	)
 }

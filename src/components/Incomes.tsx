@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Box } from '@mui/material'
 
 import { Income } from '@src/types/Income'
 
@@ -8,28 +7,6 @@ import { SimpleTable } from './SimpleTable'
 import { parseIncomesSums } from '../helpers/parseIncomes'
 import { EmptyWarner } from './EmptyWarner'
 import { Total } from './Total'
-
-const incomesWrapperStyle = {
-	padding: 4,
-	paddingBottom: 10,
-	display: 'flex',
-	justifyContent: 'center',
-	alignItems: 'center',
-	['@media (max-width: 1372px)']: {
-		padding: 2,
-		paddingBottom: 10,
-	},
-}
-
-const incomesContainerStyle = {
-	display: 'flex',
-	gap: 4,
-	alignItems: 'flex-start',
-	['@media (max-width: 1372px)']: {
-		display: 'block',
-		width: '100%',
-	},
-}
 
 export const Incomes = () => {
 	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
@@ -60,13 +37,13 @@ export const Incomes = () => {
 	}, [])
 
 	return (
-		<Box sx={incomesWrapperStyle}>
+		<div className="p-8 pb-10 flex justify-center items-center max-[1372px]:p-4 max-[1372px]:pb-10">
 			{incomes.length === 0 && (
 				<EmptyWarner handleAdd={() => setIsAddDialogOpen(true)} />
 			)}
 
 			{incomes.length > 0 && (
-				<Box sx={incomesContainerStyle}>
+				<div className="flex gap-8 items-start max-[1372px]:block max-[1372px]:w-full">
 					<Total parsedIncomesSums={parsedIncomesSums} />
 
 					<SimpleTable
@@ -75,7 +52,7 @@ export const Incomes = () => {
 						setEditId={setEditId}
 						setIsAddDialogOpen={setIsAddDialogOpen}
 					/>
-				</Box>
+				</div>
 			)}
 
 			{(!!editId || isAddDialogOpen) && (
@@ -88,6 +65,6 @@ export const Incomes = () => {
 					incomes={incomes}
 				/>
 			)}
-		</Box>
+		</div>
 	)
 }

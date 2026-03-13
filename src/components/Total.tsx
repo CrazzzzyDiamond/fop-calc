@@ -1,118 +1,56 @@
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
-	Paper,
-} from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { TotalSums } from '../types/Income'
 
 interface TotalProps {
-    parsedIncomesSums: TotalSums;
-}
-
-const totaleWrapperStyle = {	
-	position: 'sticky',
-	top: 80,
-	padding: 2,
-	['@media (max-width: 1372px)']: {
-		position: 'static',
-		marginBottom: 4,
-	},
+	parsedIncomesSums: TotalSums;
 }
 
 export const Total = ({ parsedIncomesSums }: TotalProps) => {
 	const { t } = useTranslation()
 
 	return (
-		<Paper
-			elevation={3}
-			sx={totaleWrapperStyle}
-		>
-			<TableContainer>
-				<Table sx={{ minWidth: 520 }}>
-					<TableHead>
-						<TableRow>
-							<TableCell variant='head'>
-								{t('period')}
-							</TableCell>
-							<TableCell variant='head'>
-								{t('sum')}
-							</TableCell>
-							<TableCell variant='head'>
-                                1%
-							</TableCell>
-							<TableCell variant='head'>
-                                3%
-							</TableCell>
-							<TableCell variant='head'>
-                                5%
-							</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
+		<div className="sticky top-20 p-2 rounded-lg shadow-md bg-white max-[1372px]:static max-[1372px]:mb-8">
+			<div className="overflow-x-auto">
+				<table className="min-w-130 w-full text-sm border-collapse">
+					<thead>
+						<tr className="border-b border-gray-200">
+							<th className="text-left px-4 py-3 font-semibold text-gray-700">{t('period')}</th>
+							<th className="text-left px-4 py-3 font-semibold text-gray-700">{t('sum')}</th>
+							<th className="text-left px-4 py-3 font-semibold text-gray-700">1%</th>
+							<th className="text-left px-4 py-3 font-semibold text-gray-700">3%</th>
+							<th className="text-left px-4 py-3 font-semibold text-gray-700">5%</th>
+						</tr>
+					</thead>
+					<tbody>
 						{Object.entries(parsedIncomesSums.quarter).map(([quarter, total]) => (
-							<TableRow key={quarter} hover>
-								<TableCell>
-									{t(quarter)}
-								</TableCell>
-								<TableCell>
-									{total.sum}
-								</TableCell>
-								<TableCell>
-									{total.percentage1}
-								</TableCell>
-								<TableCell>
-									{total.percentage3}
-								</TableCell>
-								<TableCell>
-									{total.percentage5}
-								</TableCell>
-							</TableRow>
+							<tr key={quarter} className="border-b border-gray-100 hover:bg-gray-50">
+								<td className="px-4 py-2">{t(quarter)}</td>
+								<td className="px-4 py-2">{total.sum}</td>
+								<td className="px-4 py-2">{total.percentage1}</td>
+								<td className="px-4 py-2">{total.percentage3}</td>
+								<td className="px-4 py-2">{total.percentage5}</td>
+							</tr>
 						))}
 						{Object.entries(parsedIncomesSums.half).map(([half, total]) => (
-							<TableRow key={half} hover>
-								<TableCell>
-									{t(half)}
-								</TableCell>
-								<TableCell>
-									{total.sum}
-								</TableCell>
-								<TableCell>
-									{total.percentage1}
-								</TableCell>
-								<TableCell>
-									{total.percentage3}
-								</TableCell>
-								<TableCell>
-									{total.percentage5}
-								</TableCell>
-							</TableRow>
+							<tr key={half} className="border-b border-gray-100 hover:bg-gray-50">
+								<td className="px-4 py-2">{t(half)}</td>
+								<td className="px-4 py-2">{total.sum}</td>
+								<td className="px-4 py-2">{total.percentage1}</td>
+								<td className="px-4 py-2">{total.percentage3}</td>
+								<td className="px-4 py-2">{total.percentage5}</td>
+							</tr>
 						))}
-						<TableRow hover>
-							<TableCell>
-								{t('year')}
-							</TableCell>
-							<TableCell>
-								{parsedIncomesSums.year.sum}
-							</TableCell>
-							<TableCell>
-								{parsedIncomesSums.year.percentage1}
-							</TableCell>
-							<TableCell>
-								{parsedIncomesSums.year.percentage3}
-							</TableCell>
-							<TableCell>
-								{parsedIncomesSums.year.percentage5}
-							</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
-			</TableContainer>
-		</Paper>
+						<tr className="hover:bg-gray-50">
+							<td className="px-4 py-2">{t('year')}</td>
+							<td className="px-4 py-2">{parsedIncomesSums.year.sum}</td>
+							<td className="px-4 py-2">{parsedIncomesSums.year.percentage1}</td>
+							<td className="px-4 py-2">{parsedIncomesSums.year.percentage3}</td>
+							<td className="px-4 py-2">{parsedIncomesSums.year.percentage5}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	)
 }

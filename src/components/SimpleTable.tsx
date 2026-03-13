@@ -1,71 +1,18 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
-import {
-	TableContainer,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
-	IconButton,
-	Box, 
-	Button,
-	Paper,
-} from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
+import { Pencil, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useElementRect }   from '@src/hooks/useElementRect'
+import { useElementRect } from '@src/hooks/useElementRect'
 
 import { Income } from '../types/Income'
 import { parseeIncomesSimple } from '../helpers/parseIncomes'
 import { ConfirmDialog } from './ConfirmDialog'
 
 interface SimpleTableProps {
-    incomes: Income[];
-    setIncomes: (incomes: Income[]) => void;
-    setEditId: (id: string) => void;
+	incomes: Income[];
+	setIncomes: (incomes: Income[]) => void;
+	setEditId: (id: string) => void;
 	setIsAddDialogOpen: (isOpen: boolean) => void;
 }
-
-const mainBoxStyle = {
-	display: 'flex',
-	gap: 4,
-	['@media (max-width: 1372px)']: {
-		display: 'block',
-		width: '100%',
-	},
-}
-
-const buttonWrapperStyle = {
-	display: 'flex',
-	justifyContent: 'flex-end',
-	marginTop: 2,
-}
-
-const buttonStyle = (
-	isTableFullHeight: boolean,
-	position: {
-		left: number,
-		right: number,
-		width: number,
-	},
-	buttonWidth: number,
-) => ({
-	backgroundColor: '#1071f2',
-	['@media (min-width: 1372px)']: {
-		...isTableFullHeight && {
-			position: 'fixed',
-			bottom: 20,
-			left: position.right - buttonWidth,
-		},
-	},
-	['@media (max-width: 1372px)']: {
-		position: 'fixed',
-		bottom: 20,
-		left: position?.left,
-		width: position?.width,
-	},
-})
 
 export const SimpleTable = ({
 	incomes,
@@ -128,73 +75,74 @@ export const SimpleTable = ({
 		}
 	}, [incomes])
 
+	const buttonFixedStyle: React.CSSProperties = isTableFullHeight
+		? { position: 'fixed', bottom: 20, left: position.right - buttonWidth }
+		: {}
+
+	const buttonMobileStyle: React.CSSProperties = window.innerWidth <= 1372
+		? { position: 'fixed', bottom: 20, left: position?.left, width: position?.width }
+		: {}
+
 	return (
-		<Box sx={mainBoxStyle}>
-			<Paper
-				elevation={3}
-				sx={{ padding: 2 }}
-			>
-				<TableContainer 
-					ref={tableRefCallback}
-				>
-					<Table sx={{ minWidth: 720 }}>
-						<TableHead>
-							<TableRow>
-								<TableCell variant='head'>{t('date')}</TableCell>
-								<TableCell variant='head'>{t('sum')}</TableCell>
-								<TableCell variant='head'>{t('currency')}</TableCell>
-								<TableCell variant='head'>{t('rate')}</TableCell>
-								<TableCell variant='head'>{t('uahSum')}</TableCell>
-								<TableCell />
-							</TableRow>
-						</TableHead>
-						<TableBody>
+		<div>
+			<div className="rounded-lg shadow-md bg-white p-4">
+				<div ref={tableRefCallback} className="overflow-x-auto">
+					<table className="min-w-180 w-full text-sm border-collapse">
+						<thead>
+							<tr className="border-b border-gray-200">
+								<th className="text-left px-4 py-3 font-semibold text-gray-700">{t('date')}</th>
+								<th className="text-left px-4 py-3 font-semibold text-gray-700">{t('sum')}</th>
+								<th className="text-left px-4 py-3 font-semibold text-gray-700">{t('currency')}</th>
+								<th className="text-left px-4 py-3 font-semibold text-gray-700">{t('rate')}</th>
+								<th className="text-left px-4 py-3 font-semibold text-gray-700">{t('uahSum')}</th>
+								<th />
+							</tr>
+						</thead>
+						<tbody>
 							{parsedIncomes.map((income, id) => (
-								<TableRow
-									key={income.date + id}
-									hover
-								>
-									<TableCell>{income.date}</TableCell>
-									<TableCell>{income.sum}</TableCell>
-									<TableCell>{income.currency}</TableCell>
-									<TableCell>{income.rate}</TableCell>
-									<TableCell>{income.uahSum.toFixed(2)}</TableCell>
-									<TableCell align='center'>
-										<IconButton
+								<tr key={income.date + id} className="border-b border-gray-100 hover:bg-gray-50">
+									<td className="px-4 py-2">{income.date}</td>
+									<td className="px-4 py-2">{income.sum}</td>
+									<td className="px-4 py-2">{income.currency}</td>
+									<td className="px-4 py-2">{income.rate}</td>
+									<td className="px-4 py-2">{income.uahSum.toFixed(2)}</td>
+									<td className="px-4 py-2 text-center whitespace-nowrap">
+										<button
+											className="p-1 rounded hover:bg-gray-100 text-gray-600 cursor-pointer"
 											onClick={() => setEditId(income.id)}
 										>
-											<EditIcon />
-										</IconButton>
-										<IconButton
+											<Pencil size={16} />
+										</button>
+										<button
+											className="p-1 rounded hover:bg-gray-100 text-gray-600 cursor-pointer"
 											onClick={() => setIdToDelete(income.id)}
 										>
-											<DeleteIcon />
-										</IconButton>
-									</TableCell>
-								</TableRow>
+											<Trash2 size={16} />
+										</button>
+									</td>
+								</tr>
 							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
+						</tbody>
+					</table>
+				</div>
 
-				<Box sx={buttonWrapperStyle}>
-					<Button
+				<div className="flex justify-end mt-4">
+					<button
 						ref={addButtonRefCallback}
-						variant="contained"
-						color="primary"
+						className="px-4 py-2 bg-[#1071f2] text-white rounded hover:bg-blue-700 transition-colors text-sm font-medium cursor-pointer"
 						onClick={() => setIsAddDialogOpen(true)}
-						sx={buttonStyle(isTableFullHeight, position, buttonWidth)}
+						style={{ ...buttonFixedStyle, ...buttonMobileStyle }}
 					>
 						{t('addIncome')}
-					</Button>
-				</Box>
+					</button>
+				</div>
 
 				<ConfirmDialog
 					isOpen={!!idToDelete}
 					onCancel={() => setIdToDelete('')}
 					onConfirm={() => handleDelete(idToDelete)}
 				/>
-			</Paper>
-		</Box>
+			</div>
+		</div>
 	)
 }

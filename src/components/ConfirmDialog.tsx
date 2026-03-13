@@ -1,14 +1,9 @@
-import { Button } from '@mui/material'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
 import { useTranslation } from 'react-i18next'
 
 interface ConfirmDialogProps {
-    isOpen: boolean;
-    onCancel: () => void;
-    onConfirm: () => void;
+	isOpen: boolean;
+	onCancel: () => void;
+	onConfirm: () => void;
 	title?: string;
 }
 
@@ -25,30 +20,32 @@ export const ConfirmDialog = ({
 		onCancel()
 	}
 
+	if (!isOpen) return null
+
 	return (
-		<Dialog
-			open={isOpen}
-			onClose={onCancel}
-		>
-			<DialogTitle>
-				{title || t('areYouSure')}
-			</DialogTitle>
-			<DialogContent>
-				{t('canNotBeUndone')}
-			</DialogContent>
-			<DialogActions>
-				<Button
-					onClick={onCancel}
-				>
-					{t('cancel')}
-				</Button>
-				<Button
-					onClick={handleConfirm}
-					color='error'
-				>
-					{t('confirm')}
-				</Button>
-			</DialogActions>
-		</Dialog>
+		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={onCancel}>
+			<div className="bg-white rounded-lg shadow-xl w-full max-w-sm mx-4" onClick={e => e.stopPropagation()}>
+				<div className="px-6 py-4 text-lg font-medium">
+					{title || t('areYouSure')}
+				</div>
+				<div className="px-6 pb-4 text-gray-600 text-sm">
+					{t('canNotBeUndone')}
+				</div>
+				<div className="flex justify-end gap-2 px-6 pb-4">
+					<button
+						className="px-4 py-2 text-sm rounded border border-gray-300 hover:bg-gray-50 cursor-pointer"
+						onClick={onCancel}
+					>
+						{t('cancel')}
+					</button>
+					<button
+						className="px-4 py-2 text-sm rounded bg-red-500 text-white hover:bg-red-600 cursor-pointer"
+						onClick={handleConfirm}
+					>
+						{t('confirm')}
+					</button>
+				</div>
+			</div>
+		</div>
 	)
 }
