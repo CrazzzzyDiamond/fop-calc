@@ -39,17 +39,20 @@ export const IncomeDialog = ({
 		currentIncome = incomes.find(income => income.id === editId) || null
 	}
 
+	const lastCurrency = localStorage.getItem('lastCurrency') || 'UAH'
+
 	const { control, handleSubmit } = useForm({
 		defaultValues: {
 			sum: currentIncome ? currentIncome.sum : '',
 			date: currentIncome
 				? dayjs(currentIncome.date, 'DD.MM.YYYY').format('YYYY-MM-DD')
 				: dayjs().format('YYYY-MM-DD'),
-			currency: currentIncome ? currentIncome.currency : 'UAH',
+			currency: currentIncome ? currentIncome.currency : lastCurrency,
 		}
 	})
 
 	const submitFormData = async (data: FormData) => {
+		localStorage.setItem('lastCurrency', data.currency)
 		const isUah = data.currency === 'UAH'
 		let rate = 1
 
