@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { Income } from '@src/types/Income'
 
@@ -8,33 +8,15 @@ import { parseIncomesSums } from '../helpers/parseIncomes'
 import { EmptyWarner } from './EmptyWarner'
 import { Total } from './Total'
 
-export const Incomes = () => {
+interface IncomesProps {
+	incomes: Income[];
+	setIncomes: React.Dispatch<React.SetStateAction<Income[]>>;
+}
+
+export const Incomes = ({ incomes, setIncomes }: IncomesProps) => {
 	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
 	const [editId, setEditId] = useState<string>('')
-	const [incomes, setIncomes] = useState<Income[]>([])
 	const parsedIncomesSums = parseIncomesSums(incomes)
-
-	const updateIncomes = () => {
-		const storedIncomes = localStorage.getItem('incomes')
-
-		if (storedIncomes && storedIncomes !== 'null') {
-			setIncomes(JSON.parse(storedIncomes))
-		}
-
-		if (storedIncomes === 'null') {
-			setIncomes([])
-		}
-	}
-
-	useEffect(() => {
-		updateIncomes()
-
-		window.addEventListener('storage', updateIncomes)
-
-		return () => {
-			window.removeEventListener('storage', updateIncomes)
-		}
-	}, [])
 
 	return (
 		<div className="p-8 pb-10 flex justify-center items-center max-[1372px]:p-4 max-[1372px]:pb-10">

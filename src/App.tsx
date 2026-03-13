@@ -4,11 +4,13 @@ import { useTranslation } from 'react-i18next'
 import 'dayjs/locale/uk'
 import 'dayjs/locale/en'
 
+import { useBooks } from './hooks/useBooks'
 import { AppBar } from './components/AppBar'
 import { Incomes } from './components/Incomes'
 
 function App() {
 	const { i18n } = useTranslation()
+	const { books, activeBook, activeBookId, setActiveBookId, createBook, deleteBook, setActiveBookIncomes, clearActiveBook } = useBooks()
 
 	useEffect(() => {
 		const lang = localStorage.getItem('lang')
@@ -21,8 +23,18 @@ function App() {
 
 	return (
 		<div style={{ background: 'linear-gradient(135deg, #a2c0cc, #fceea7)', minHeight: '100vh' }}>
-			<AppBar />
-			<Incomes />
+			<AppBar
+				books={books}
+				activeBookId={activeBookId}
+				onSelectBook={setActiveBookId}
+				onCreateBook={createBook}
+				onDeleteBook={deleteBook}
+				onClear={clearActiveBook}
+			/>
+			<Incomes
+				incomes={activeBook?.incomes ?? []}
+				setIncomes={setActiveBookIncomes}
+			/>
 		</div>
 	)
 }

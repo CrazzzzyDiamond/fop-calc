@@ -77,13 +77,11 @@ export const IncomeDialog = ({
 
 				const newIncomes = [...prevIncomes, newIncome]
 
-				localStorage.setItem('incomes', JSON.stringify(newIncomes))
-
 				return newIncomes
 			})
 		} else {
 			setIncomes((prevIncomes: Income[]) => {
-				const newIncomes = prevIncomes.map(income => {
+				return prevIncomes.map(income => {
 					if (income.id === editId) {
 						return {
 							...income,
@@ -97,10 +95,6 @@ export const IncomeDialog = ({
 
 					return income
 				})
-
-				localStorage.setItem('incomes', JSON.stringify(newIncomes))
-
-				return newIncomes
 			})
 		}
 

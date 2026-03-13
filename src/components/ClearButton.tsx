@@ -3,14 +3,13 @@ import { useTranslation } from 'react-i18next'
 
 import { ConfirmDialog } from './ConfirmDialog'
 
-export const ClearButton = () => {
+interface ClearButtonProps {
+	onClear: () => void;
+}
+
+export const ClearButton = ({ onClear }: ClearButtonProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { t } = useTranslation()
-
-	const handleClear = () => {
-		localStorage.setItem('incomes', JSON.stringify(null))
-		window.dispatchEvent(new Event('storage'))
-	}
 
 	return (
 		<>
@@ -25,7 +24,7 @@ export const ClearButton = () => {
 				isOpen={isOpen}
 				title={t('clearTitle')}
 				onCancel={() => setIsOpen(false)}
-				onConfirm={handleClear}
+				onConfirm={onClear}
 			/>
 		</>
 	)

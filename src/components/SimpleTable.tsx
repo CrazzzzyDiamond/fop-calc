@@ -38,10 +38,7 @@ export const SimpleTable = ({
 	}, [])
 
 	const handleDelete = (id: string) => {
-		const newIncomes = incomes.filter(income => income.id !== id)
-
-		setIncomes(newIncomes)
-		localStorage.setItem('incomes', JSON.stringify(newIncomes))
+		setIncomes(incomes.filter(income => income.id !== id))
 	}
 
 	const checkTableHeight = () => {

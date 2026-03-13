@@ -36,6 +36,11 @@ i18n
 					clear: 'Clear',
 					clearTitle: 'Clear all data?',
 					noIncomes: 'No data',
+					newBook: 'New book',
+					deleteBook: 'Delete book',
+					deleteBookTitle: 'Delete this book?',
+					create: 'Create',
+					bookName: 'Book name',
 				},
 			},
 			ua: {
@@ -63,6 +68,11 @@ i18n
 					clear: 'Очистити',
 					clearTitle: 'Очистити всі дані?',
 					noIncomes: 'Записів немає',
+					newBook: 'Нова книга',
+					deleteBook: 'Видалити книгу',
+					deleteBookTitle: 'Видалити цю книгу?',
+					create: 'Створити',
+					bookName: 'Назва книги',
 				},
 			}
 		},
