@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useElementRect } from '@src/hooks/useElementRect'
 
 import { Income } from '../types/Income'
-import { parseeIncomesSimple } from '../helpers/parseIncomes'
+import { parseIncomesSimple } from '../helpers/parseIncomes'
 import { ConfirmDialog } from './ConfirmDialog'
 
 interface SimpleTableProps {
@@ -28,7 +28,7 @@ export const SimpleTable = ({
 	const { position, checkElementPosition } = useElementRect()
 	const buttonWidth = buttonRef.current?.offsetWidth || 0
 
-	const parsedIncomes = parseeIncomesSimple(incomes)
+	const parsedIncomes = parseIncomesSimple(incomes)
 
 	const tableRefCallback = useCallback((node: HTMLDivElement) => {
 		if (node) {

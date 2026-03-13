@@ -5,7 +5,7 @@ import { Quarter } from '../enums/Quarter'
 import { Month } from '../enums/Month'
 import { ParsedIncomeTable, TotalSums } from '../types/Income'
 import { defaultTable } from '../constants/defaultTable'
-import { evaluate, round, add } from 'mathjs'
+import { round, add } from 'mathjs'
 dayjs.extend(CustomParseFormat)
 
 const monthNames = [
@@ -25,30 +25,32 @@ const getQuarter = (month: number): Quarter => {
 	}
 }
 
-const sortByDate = (a: Income, b: Income) => {
-	const aDate = dayjs(a.date, 'DD/MM/YYYY')
-	const bDate = dayjs(b.date, 'DD/MM/YYYY')
+const DATE_FORMAT = 'DD.MM.YYYY'
 
-	return aDate.isBefore(bDate) ? -1 : 1
+const sortByDate = (a: Income, b: Income) => {
+	const aDate = dayjs(a.date, DATE_FORMAT)
+	const bDate = dayjs(b.date, DATE_FORMAT)
+
+	if (aDate.isBefore(bDate)) return -1
+	if (aDate.isAfter(bDate)) return 1
+	return 0
 }
 
-export const parseeIncomesSimple = (incomes: Income[]) => {
-	const parsedIncomes = incomes
+export const parseIncomesSimple = (incomes: Income[]) => {
+	return incomes
 		.map(income => ({
 			...income,
-			date: dayjs(income.date, 'DD.MM.YYYY').format('DD MMM YYYY'),
-			month: monthNames[dayjs(income.date, 'DD.MM.YYYY').month()]
+			date: dayjs(income.date, DATE_FORMAT).format('DD MMM YYYY'),
+			month: monthNames[dayjs(income.date, DATE_FORMAT).month()]
 		}))
 		.sort(sortByDate)
-
-	return parsedIncomes
 }
 
 export const parseIncomes = (incomes: Income[]) => {
 	const parsedIncomes: ParsedIncomeTable = { ...defaultTable }
 
 	incomes.forEach(income => {
-		const date = dayjs(income.date, 'DD/MM/YYYY')
+		const date = dayjs(income.date, DATE_FORMAT)
 		const month = date.month()
 		const quarter = getQuarter(month)
 		const monthName = monthNames[month] as Month
@@ -70,7 +72,7 @@ export const parseIncomesSums = (incomes: Income[]): TotalSums => {
 	let yearSum = 0
 
 	incomes.forEach(income => {
-		const date = dayjs(income.date, 'DD/MM/YYYY')
+		const date = dayjs(income.date, DATE_FORMAT)
 		const month = date.month()
 		const uahSum = income.uahSum
 
@@ -93,52 +95,24 @@ export const parseIncomesSums = (incomes: Income[]): TotalSums => {
 		yearSum = add(yearSum, uahSum)
 	})
 
+	const pct = (sum: number) => ({
+		sum: round(sum, 2),
+		percentage1: round(sum * 0.01, 2),
+		percentage3: round(sum * 0.03, 2),
+		percentage5: round(sum * 0.05, 2),
+	})
+
 	return {
 		quarter: {
-			[Quarter.Q1]: {
-				sum: round(firstQuarterSum, 2),
-				percentage1: round(evaluate(`(${firstQuarterSum} * 1) / 100`), 2),
-				percentage3: round(evaluate(`(${firstQuarterSum} * 3) / 100`), 2),
-				percentage5: round(evaluate(`(${firstQuarterSum} * 5) / 100`), 2)
-			},
-			[Quarter.Q2]: {
-				sum: round(secondQuarterSum, 2),
-				percentage1: round(evaluate(`(${secondQuarterSum} * 1) / 100`), 2),
-				percentage3: round(evaluate(`(${secondQuarterSum} * 3) / 100`), 2),
-				percentage5: round(evaluate(`(${secondQuarterSum} * 5) / 100`), 2)
-			},
-			[Quarter.Q3]: {
-				sum: round(thirdQuarterSum, 2),
-				percentage1: round(evaluate(`(${thirdQuarterSum} * 1) / 100`), 2),
-				percentage3: round(evaluate(`(${thirdQuarterSum} * 3) / 100`), 2),
-				percentage5: round(evaluate(`(${thirdQuarterSum} * 5) / 100`), 2)
-			},
-			[Quarter.Q4]: {
-				sum: round(fourthQuarterSum, 2),
-				percentage1: round(evaluate(`(${fourthQuarterSum} * 1) / 100`), 2),
-				percentage3: round(evaluate(`(${fourthQuarterSum} * 3) / 100`), 2),
-				percentage5: round(evaluate(`(${fourthQuarterSum} * 5) / 100`), 2)
-			}
+			[Quarter.Q1]: pct(firstQuarterSum),
+			[Quarter.Q2]: pct(secondQuarterSum),
+			[Quarter.Q3]: pct(thirdQuarterSum),
+			[Quarter.Q4]: pct(fourthQuarterSum),
 		},
 		half: {
-			firstHalf: {
-				sum: round(firstHalfSum, 2),
-				percentage1: round(evaluate(`(${firstHalfSum} * 1) / 100`), 2),
-				percentage3: round(evaluate(`(${firstHalfSum} * 3) / 100`), 2),
-				percentage5: round(evaluate(`(${firstHalfSum} * 5) / 100`), 2)
-			},
-			secondHalf: {
-				sum: round(secondHalfSum, 2),
-				percentage1: round(evaluate(`(${secondHalfSum} * 1) / 100`), 2),
-				percentage3: round(evaluate(`(${secondHalfSum} * 3) / 100`), 2),
-				percentage5: round(evaluate(`(${secondHalfSum} * 5) / 100`), 2)
-			}
+			firstHalf: pct(firstHalfSum),
+			secondHalf: pct(secondHalfSum),
 		},
-		year: {
-			sum: round(yearSum, 2),
-			percentage1: round(evaluate(`(${yearSum} * 1) / 100`), 2),
-			percentage3: round(evaluate(`(${yearSum} * 3) / 100`), 2),
-			percentage5: round(evaluate(`(${yearSum} * 5) / 100`), 2)
-		}
+		year: pct(yearSum),
 	}
 }
