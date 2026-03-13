@@ -1,14 +1,7 @@
 import { useState } from 'react'
-import { Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { ConfirmDialog } from './ConfirmDialog'
-
-const clearButtonStyle = {
-	marginRight: '1rem',
-	backgroundColor: '#1071f2',
-	color: 'white',
-}
 
 export const ClearButton = () => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -21,14 +14,14 @@ export const ClearButton = () => {
 
 	return (
 		<>
-			<Button
-				sx={clearButtonStyle}
+			<button
+				className="mr-4 px-4 py-2 bg-[#1071f2] text-white rounded cursor-pointer hover:bg-blue-700 transition-colors text-sm font-medium"
 				onClick={() => setIsOpen(true)}
 			>
-            	{ t('clear')}
-			</Button>
+				{t('clear')}
+			</button>
 
-			<ConfirmDialog 
+			<ConfirmDialog
 				isOpen={isOpen}
 				title={t('clearTitle')}
 				onCancel={() => setIsOpen(false)}

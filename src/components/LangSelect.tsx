@@ -1,8 +1,3 @@
-import {
-	Select,
-	MenuItem,
-	SelectChangeEvent,
-} from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 
@@ -13,16 +8,12 @@ const LANG = {
 	en: 'en',
 }
 
-const langSelectorStyle = {
-	backgroundColor: 'white',
-}
-
 export const LangSelect = () => {
 	const { i18n } = useTranslation()
 	const lang = localStorage.getItem('lang') || 'en'
 
-	const handleChange = (event: SelectChangeEvent) => {
-		const lang = event.target.value as keyof typeof LANG
+	const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const lang = e.target.value as keyof typeof LANG
 
 		localStorage.setItem('lang', lang)
 		i18n.changeLanguage(lang)
@@ -30,24 +21,16 @@ export const LangSelect = () => {
 	}
 
 	return (
-		<Select
-			labelId="demo-simple-select-label"
-			id="demo-simple-select"
+		<select
 			value={lang}
-			label="Age"
 			onChange={handleChange}
-			size='small'
-			variant='outlined'
-			sx={langSelectorStyle}
+			className="px-2 py-1 bg-white text-gray-900 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
 		>
 			{LANGS_OPTIONS.map(lang => (
-				<MenuItem
-					key={lang.value}
-					value={lang.value}
-				>
+				<option key={lang.value} value={lang.value}>
 					{lang.label}
-				</MenuItem>
+				</option>
 			))}
-		</Select>
+		</select>
 	)
 }

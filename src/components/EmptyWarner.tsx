@@ -1,44 +1,25 @@
-import {
-	Box,
-	Button,
-	Paper,
-	Typography
-} from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 interface EmptyWarnerProps {
-    handleAdd: () => void;
-}
-
-const emptyPaperStyle = {
-	padding: 6,
-	textAlign: 'center',
+	handleAdd: () => void;
 }
 
 export const EmptyWarner = ({ handleAdd }: EmptyWarnerProps) => {
 	const { t } = useTranslation()
 
 	return (
-		<Box sx={{ padding: 4 }}>
-			<Paper
-				elevation={3}
-				sx={emptyPaperStyle}
-			>
-				<Typography variant='h3'>
+		<div className="p-8">
+			<div className="rounded-lg shadow-md p-12 text-center bg-white">
+				<h3 className="text-4xl font-light mb-8">
 					{t('noIncomes')}
-				</Typography>
-				<Box
-					m={5}
+				</h3>
+				<button
+					className="px-6 py-3 bg-[#1071f2] text-white rounded cursor-pointer hover:bg-blue-700 transition-colors text-base font-medium"
+					onClick={handleAdd}
 				>
-					<Button
-						variant='contained'
-						onClick={handleAdd}
-						size='large'
-					>
-						{t('addIncome')}
-					</Button>
-				</Box>
-			</Paper>
-		</Box>
+					{t('addIncome')}
+				</button>
+			</div>
+		</div>
 	)
 }
