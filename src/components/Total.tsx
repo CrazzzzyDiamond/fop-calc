@@ -26,27 +26,27 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 						{Object.entries(parsedIncomesSums.quarter).map(([quarter, total]) => (
 							<tr key={quarter} className="border-b border-gray-100 hover:bg-gray-50">
 								<td className="px-4 py-2">{t(quarter)}</td>
-								<td className="px-4 py-2">{total.sum}</td>
-								<td className="px-4 py-2">{total.percentage1}</td>
-								<td className="px-4 py-2">{total.percentage3}</td>
-								<td className="px-4 py-2">{total.percentage5}</td>
+								<td className="px-4 py-2">{total.sum.toFixed(2)}</td>
+								<td className="px-4 py-2">{total.percentage1.toFixed(2)}</td>
+								<td className="px-4 py-2">{total.percentage3.toFixed(2)}</td>
+								<td className="px-4 py-2">{total.percentage5.toFixed(2)}</td>
 							</tr>
 						))}
 						{Object.entries(parsedIncomesSums.half).map(([half, total]) => (
 							<tr key={half} className="border-b border-gray-100 hover:bg-gray-50">
 								<td className="px-4 py-2">{t(half)}</td>
-								<td className="px-4 py-2">{total.sum}</td>
-								<td className="px-4 py-2">{total.percentage1}</td>
-								<td className="px-4 py-2">{total.percentage3}</td>
-								<td className="px-4 py-2">{total.percentage5}</td>
+								<td className="px-4 py-2">{total.sum.toFixed(2)}</td>
+								<td className="px-4 py-2">{total.percentage1.toFixed(2)}</td>
+								<td className="px-4 py-2">{total.percentage3.toFixed(2)}</td>
+								<td className="px-4 py-2">{total.percentage5.toFixed(2)}</td>
 							</tr>
 						))}
 						<tr className="hover:bg-gray-50">
 							<td className="px-4 py-2">{t('year')}</td>
-							<td className="px-4 py-2">{parsedIncomesSums.year.sum}</td>
-							<td className="px-4 py-2">{parsedIncomesSums.year.percentage1}</td>
-							<td className="px-4 py-2">{parsedIncomesSums.year.percentage3}</td>
-							<td className="px-4 py-2">{parsedIncomesSums.year.percentage5}</td>
+							<td className="px-4 py-2">{parsedIncomesSums.year.sum.toFixed(2)}</td>
+							<td className="px-4 py-2">{parsedIncomesSums.year.percentage1.toFixed(2)}</td>
+							<td className="px-4 py-2">{parsedIncomesSums.year.percentage3.toFixed(2)}</td>
+							<td className="px-4 py-2">{parsedIncomesSums.year.percentage5.toFixed(2)}</td>
 						</tr>
 					</tbody>
 				</table>
