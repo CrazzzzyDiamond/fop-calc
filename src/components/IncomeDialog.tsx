@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import dayjs from 'dayjs'
 import { multiply } from 'mathjs'
@@ -41,6 +42,9 @@ export const IncomeDialog = ({
 
 	const lastCurrency = localStorage.getItem('lastCurrency') || 'UAH'
 
+	const [rateError, setRateError] = useState<string | null>(null)
+	const [isSubmitting, setIsSubmitting] = useState(false)
+
 	const { control, handleSubmit } = useForm({
 		defaultValues: {
 			sum: currentIncome ? currentIncome.sum : '',
@@ -53,14 +57,23 @@ export const IncomeDialog = ({
 
 	const submitFormData = async (data: FormData) => {
 		localStorage.setItem('lastCurrency', data.currency)
+		setRateError(null)
+		setIsSubmitting(true)
+
 		const isUah = data.currency === 'UAH'
 		let rate = 1
 
 		if (!isUah) {
-			rate = await getExchangeRate(
-				data.currency,
-				dayjs(data.date).format('YYYYMMDD')
-			)
+			try {
+				rate = await getExchangeRate(
+					data.currency,
+					dayjs(data.date).format('YYYYMMDD')
+				)
+			} catch {
+				setRateError(t('rateError'))
+				setIsSubmitting(false)
+				return
+			}
 		}
 
 		// TODO: Refactor this
@@ -98,6 +111,7 @@ export const IncomeDialog = ({
 			})
 		}
 
+		setIsSubmitting(false)
 		onCancel()
 
 		if (editId && setEditId) {
@@ -175,6 +189,12 @@ export const IncomeDialog = ({
 						/>
 					</div>
 
+					{rateError && (
+						<div className="mx-6 mb-2 px-3 py-2 bg-red-50 border border-red-200 text-red-600 text-sm rounded">
+							{rateError}
+						</div>
+					)}
+
 					<div className="flex justify-end gap-2 px-6 pb-4">
 						<button
 							type="button"
@@ -185,6 +205,7 @@ export const IncomeDialog = ({
 						</button>
 						<button
 							type="submit"
+							disabled={isSubmitting}
 							className="px-4 py-2 text-sm rounded bg-[#1071f2] text-white hover:bg-blue-700 cursor-pointer"
 						>
 							{t('add')}

@@ -41,6 +41,7 @@ i18n
 					deleteBookTitle: 'Delete this book?',
 					create: 'Create',
 					bookName: 'Book name',
+					rateError: 'Failed to fetch exchange rate. Please try again.',
 				},
 			},
 			ua: {
@@ -73,6 +74,7 @@ i18n
 					deleteBookTitle: 'Видалити цю книгу?',
 					create: 'Створити',
 					bookName: 'Назва книги',
+					rateError: 'Не вдалося отримати курс НБУ. Спробуйте ще раз.',
 				},
 			}
 		},
