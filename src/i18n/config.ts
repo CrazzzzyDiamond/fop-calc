@@ -42,6 +42,7 @@ i18n
 					create: 'Create',
 					bookName: 'Book name',
 					rateError: 'Failed to fetch exchange rate. Please try again.',
+					privacy: 'All data is stored locally in your browser. No data is collected or sent to third parties. Exchange rates are fetched from the public NBU API.',
 				},
 			},
 			ua: {
@@ -75,6 +76,7 @@ i18n
 					create: 'Створити',
 					bookName: 'Назва книги',
 					rateError: 'Не вдалося отримати курс НБУ. Спробуйте ще раз.',
+					privacy: 'Усі дані зберігаються локально у вашому браузері. Додаток не збирає і не передає дані третім особам. Курс валют отримується з відкритого API НБУ.',
 				},
 			}
 		},

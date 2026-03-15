@@ -2,7 +2,7 @@
   "name": "fop-calc",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://inkluter.github.io/fop-calc",
+  "homepage": "https://crazzzzydiamond.github.io/fop-calc/",
   "dependencies": {
     "@types/node": "^25.4.0",
     "@types/react": "^19.2.14",
