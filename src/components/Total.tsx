@@ -12,7 +12,7 @@ export const Total = ({ parsedIncomesSums }: TotalProps) => {
 	return (
 		<div className="sticky top-20 p-2 rounded-lg shadow-md bg-white max-[1372px]:static max-[1372px]:mb-8">
 			<div className="overflow-x-auto">
-				<table className="min-w-130 w-full text-sm border-collapse">
+				<table className="w-full text-sm border-collapse">
 					<thead>
 						<tr className="border-b border-gray-200">
 							<th className="text-left px-4 py-3 font-semibold text-gray-700">{t('period')}</th>

@@ -8,7 +8,7 @@ const LANG = {
 	en: 'en',
 }
 
-export const LangSelect = () => {
+export const LangSelect = ({ className }: { className?: string }) => {
 	const { i18n } = useTranslation()
 	const lang = localStorage.getItem('lang') || 'en'
 
@@ -24,7 +24,7 @@ export const LangSelect = () => {
 		<select
 			value={lang}
 			onChange={handleChange}
-			className="px-2 py-1 bg-white text-gray-900 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+			className={className ?? "px-2 py-1 bg-white text-gray-900 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"}
 		>
 			{LANGS_OPTIONS.map(lang => (
 				<option key={lang.value} value={lang.value}>

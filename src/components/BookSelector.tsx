@@ -11,9 +11,10 @@ interface BookSelectorProps {
 	onSelect: (id: string) => void;
 	onCreate: (name: string) => void;
 	onDelete: (id: string) => void;
+	fullWidth?: boolean;
 }
 
-export const BookSelector = ({ books, activeBookId, onSelect, onCreate, onDelete }: BookSelectorProps) => {
+export const BookSelector = ({ books, activeBookId, onSelect, onCreate, onDelete, fullWidth }: BookSelectorProps) => {
 	const { t } = useTranslation()
 	const [isCreating, setIsCreating] = useState(false)
 	const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false)
@@ -26,6 +27,64 @@ export const BookSelector = ({ books, activeBookId, onSelect, onCreate, onDelete
 			setNewName(`ФОП ${new Date().getFullYear()}`)
 		}
 	}
+
+	if (fullWidth) return (
+		<div className="w-full flex flex-col gap-1">
+			<select
+				value={activeBookId}
+				onChange={e => onSelect(e.target.value)}
+				className="w-full px-2 py-1 bg-white text-gray-900 border border-gray-300 rounded text-sm focus:outline-none"
+			>
+				{books.map(book => (
+					<option key={book.id} value={book.id}>{book.name}</option>
+				))}
+			</select>
+			<div className="flex gap-1">
+				<button
+					className="flex-1 flex items-center justify-center gap-1 px-2 py-1 rounded text-gray-600 hover:bg-gray-100 cursor-pointer text-sm"
+					onClick={() => setIsCreating(true)}
+				>
+					<Plus size={14} />
+					{t('newBook')}
+				</button>
+				{books.length > 1 && (
+					<button
+						className="p-1 rounded text-gray-600 hover:bg-gray-100 cursor-pointer"
+						onClick={() => setIsConfirmDeleteOpen(true)}
+						title={t('deleteBook')}
+					>
+						<Trash2 size={16} />
+					</button>
+				)}
+			</div>
+			<ConfirmDialog
+				isOpen={isConfirmDeleteOpen}
+				title={t('deleteBookTitle')}
+				onCancel={() => setIsConfirmDeleteOpen(false)}
+				onConfirm={() => onDelete(activeBookId)}
+			/>
+			{isCreating && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+					<div className="bg-white rounded-lg shadow-xl w-full max-w-sm mx-4 p-6">
+						<div className="text-lg font-medium mb-4">{t('newBook')}</div>
+						<label className="text-sm font-medium text-gray-700 block mb-1">{t('bookName')}</label>
+						<input
+							type="text"
+							value={newName}
+							onChange={e => setNewName(e.target.value)}
+							onKeyDown={e => e.key === 'Enter' && handleCreate()}
+							autoFocus
+							className="w-full px-3 py-2 border border-gray-300 rounded text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+						/>
+						<div className="flex justify-end gap-2">
+							<button className="px-4 py-2 text-sm rounded border border-gray-300 hover:bg-gray-50 cursor-pointer" onClick={() => setIsCreating(false)}>{t('cancel')}</button>
+							<button className="px-4 py-2 text-sm rounded bg-[#1071f2] text-white hover:bg-blue-700 cursor-pointer" onClick={handleCreate}>{t('create')}</button>
+						</div>
+					</div>
+				</div>
+			)}
+		</div>
+	)
 
 	return (
 		<div className="flex items-center gap-1 mr-3">
