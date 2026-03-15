@@ -2,7 +2,7 @@
 
 Tax calculator for Ukrainian sole proprietors (FOP) in group 3. Calculates unified tax (1%, 3%, 5%) and shows totals by quarter and year.
 
-🔗 [fop-calc](https://inkluter.github.io/fop-calc/)
+🔗 [fop-calc](https://crazzzzydiamond.github.io/fop-calc/)
 
 ## Features
 
